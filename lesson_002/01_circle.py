@@ -9,7 +9,7 @@ radius = 42
 #       формулу можно подсмотреть в интернете,
 #       пи возьмите равным 3.1415926
 #       точность указывается в функции round()
-# TODO здесь ваш код
+
 pi = 3.1415926
 S = round(pi * radius, 4)
 print(S)
@@ -33,7 +33,7 @@ print(True) if distance < radius else print(False)
 point_2 = (30, 30)
 # Если точка point_2 лежит внутри круга (radius = 42), то выведите на консоль True,
 # Или False, если точка лежит вовне круга.
-# TODO здесь ваш код
+
 distance = (point_2[0] ** 2 + point_2[1]**2 ) **.5
 print(True) if distance < radius else print(False)
 # Пример вывода на консоль:
