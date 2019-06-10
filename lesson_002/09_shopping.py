@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from pprint import pprint
 # Есть словарь магазинов с распродажами
 
 shops = {
@@ -28,12 +28,29 @@ shops = {
 }
 
 # Создайте словарь цен на продкты следующего вида (писать прямо в коде)
+
 sweets = {
-    'название сладости': [
-        {'shop': 'название магазина', 'price': 99.99},
-        # TODO тут с клавиатуры введите магазины и цены (можно копипастить ;)
+    'печенье': [
+        {'shop': list(shops.keys())[0], 'price': shops[list(shops.keys())[0]][0]['price']},
+        {'shop': list(shops.keys())[1], 'price': shops[list(shops.keys())[1]][0]['price']},
     ],
-    # TODO тут с клавиатуры введите другую сладость и далее словарь магазинов
+    'конфеты': [
+        {'shop': list(shops.keys())[2], 'price': shops[list(shops.keys())[2]][1]['price']},
+        {'shop': list(shops.keys())[1], 'price': shops[list(shops.keys())[1]][1]['price']},
+
+    ],
+    'карамель': [
+        {'shop': list(shops.keys())[2], 'price': shops[list(shops.keys())[2]][2]['price']},
+        {'shop': list(shops.keys())[0], 'price': shops[list(shops.keys())[0]][2]['price']},
+
+    ],
+    'пироженное': [
+        {'shop': list(shops.keys())[1], 'price': shops[list(shops.keys())[1]][3]['price']},
+        {'shop': list(shops.keys())[2], 'price': shops[list(shops.keys())[2]][3]['price']},
+
+    ],
+
 }
+pprint(sweets)
 # Указать надо только по 2 магазина с минимальными ценами
 
