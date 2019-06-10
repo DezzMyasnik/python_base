@@ -21,6 +21,7 @@ my_family_height.append([my_family[2], 167])
 #print(my_family_height)
 # Выведите на консоль рост отца в формате
 #   Рост отца - ХХ см
+
 for r in my_family_height:
     if r[0] == 'отец':
         print("Рост отца - {} cм".format(r[1]))
