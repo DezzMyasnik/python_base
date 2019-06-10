@@ -22,9 +22,9 @@ secret_message = [
 # Если нужны вычисления и разные пробы - делайте это в консоли пайтона, тут нужен только результат
 
 
-secret_word = (secret_message[0][4] +
-                secret_message[1][10:13] +
-                secret_message[2][6:15:2] +
-                secret_message[3][13:8:-1] +
-                secret_message[4][21:17:-1])
+secret_word = (secret_message[0][3] +
+                secret_message[1][9:13] +
+                secret_message[2][5:14:2] +
+                secret_message[3][12:6:-1] +
+                secret_message[4][20:15:-1])
 print(secret_word)
