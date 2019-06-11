@@ -16,8 +16,8 @@ meadow_set = set(meadow)
 
 
 # выведите на консоль все виды цветов
-print(garden_set)  # TODO а как это сделать через одно множество?
-print(meadow_set)
+print(garden_set.union(meadow_set))
+# print(meadow_set)
 
 # выведите на консоль те, которые растут и там и там
 print(garden_set & meadow_set)
