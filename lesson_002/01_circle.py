@@ -11,7 +11,7 @@ radius = 42
 #       точность указывается в функции round()
 
 pi = 3.1415926
-S = round(pi * radius, 4)  # TODO еще раз проверть формулу площади
+S = round(pi * radius**2, 4)
 print(S)
 
 # Далее, пусть есть координаты точки
@@ -27,7 +27,7 @@ point = (23, 34)
 #       операции сравнения дают булевы константы True и False
 
 distance = (point[0] ** 2 + point[1]**2 ) **.5
-print(True) if distance < radius else print(False)  # TODO е если проще? под принт занести условие
+print(True if distance < radius else False)
 
  # Аналогично для другой точки
 point_2 = (30, 30)
@@ -35,7 +35,7 @@ point_2 = (30, 30)
 # Или False, если точка лежит вовне круга.
 
 distance = (point_2[0] ** 2 + point_2[1]**2 ) **.5
-print(True) if distance < radius else print(False)
+print(True if distance < radius else False)
 # Пример вывода на консоль:
 #
 # 77777.7777
