@@ -13,7 +13,7 @@ print(zoo)
 # добавьте птиц из списка birds в последние клетки зоопарка
 birds = ['rooster', 'ostrich', 'lark', ]
 #  и выведите список на консоль
-for b in birds:
+for b in birds:  # TODO правильно но у листа есть метод, который позволяет добавлять в него лист сразу
     zoo.append(b)
 print(zoo)
 

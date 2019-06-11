@@ -10,6 +10,6 @@
 result = (1 + 2) * 3
 print(result)
 
-result_2 = (1 * 2) + 3 + 4 * 5
+result_2 = (1 * 2) + 3 + 4 * 5  # TODO а можно еще пример?
 print(result_2)
 
