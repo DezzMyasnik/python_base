@@ -4,11 +4,11 @@
 # Создайте списки:
 
 # моя семья (минимум 3 элемента, есть еще дедушки и бабушки, если что)
-my_family = []
-my_family.append('я')  # TODO можно сразу создавать лист с нужными элементами
-my_family.append('отец')
-my_family.append('мама')
-#print(my_family)
+my_family = ['я', 'отец', 'мама']
+# my_family.append('я')
+# my_family.append('отец')
+# my_family.append('мама')
+print(my_family)
 # список списков приблизителного роста членов вашей семьи
 my_family_height = [
     # ['имя', рост],
