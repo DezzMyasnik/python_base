@@ -27,7 +27,7 @@ point = (23, 34)
 #       операции сравнения дают булевы константы True и False
 
 distance = (point[0] ** 2 + point[1]**2 ) **.5
-print(True if distance < radius else False)  # TODO масло масляное) distance < radius это уже булевское значение
+print(distance < radius)
 
  # Аналогично для другой точки
 point_2 = (30, 30)
@@ -35,7 +35,7 @@ point_2 = (30, 30)
 # Или False, если точка лежит вовне круга.
 
 distance = (point_2[0] ** 2 + point_2[1]**2 ) **.5
-print(True if distance < radius else False)
+print(distance < radius)
 # Пример вывода на консоль:
 #
 # 77777.7777
