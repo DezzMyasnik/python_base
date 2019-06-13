@@ -57,15 +57,16 @@ tables_count =  store[goods['Стол']][0]['quantity'] + store[goods['Стол'
 print('Стол -', tables_count, 'шт, стоимость', tables_1_coast + tables_2_coast, 'руб')
 
 
-couch_coast = store[goods['Диван']][0]['price'] + store[goods['Диван']][1]['price']
-couch_count = store[goods['Диван']][0]['quantity'] + store[goods['Диван']][1]['quantity']
+couch_1_coast = store[goods['Диван']][0]['price'] * store[goods['Диван']][0]['quantity']
+couch_2_coast = store[goods['Диван']][1]['price'] * store[goods['Диван']][1]['quantity']
+couch_count = store[goods['Диван']][0]['quantity'] +store[goods['Диван']][1]['quantity']
+print('Диван -', couch_count, 'шт, стоимость', couch_1_coast + couch_2_coast, 'руб')
 
-print('Диван -', couch_count, 'шт, стоимость', couch_coast * couch_count, 'руб')
-
-chair_coast = store[goods['Стул']][0]['price'] + store[goods['Стул']][1]['price']
-chair_count = store[goods['Стул']][0]['quantity'] + store[goods['Стул']][1]['quantity']
-
-print('Стул -', chair_count, 'шт, стоимость', chair_count * chair_coast, 'руб')
+chair_1_coast = store[goods['Стул']][0]['price'] * store[goods['Стул']][0]['quantity']
+chair_2_coast = store[goods['Стул']][1]['price'] * store[goods['Стул']][1]['quantity']
+chair_3_coast = store[goods['Стул']][2]['price'] * store[goods['Стул']][2]['quantity']
+chair_count = store[goods['Стул']][0]['quantity'] + store[goods['Стул']][1]['quantity'] + store[goods['Стул']][2]['quantity']
+print('Стул -', chair_count, 'шт, стоимость', chair_1_coast + chair_2_coast + chair_3_coast, 'руб')
 
 ##########################################################################################
 # ВНИМАНИЕ! После того как __ВСЯ__ домашняя работа сделана и запушена на сервер,         #
@@ -73,7 +74,7 @@ print('Стул -', chair_count, 'шт, стоимость', chair_count * chair
 # и оформить попытку сдачи ДЗ! Без этого ДЗ не будет проверяться!                        #
 # Как оформить попытку сдачи смотрите видео - https://youtu.be/qVpN0L-C3LU               #
 ##########################################################################################
-# TODO не все исправили - правильный ответ:
+
 # Лампа - 27 шт, стоимость 1134 руб
 # Стол -  54  шт., стоимость 27860  руб
 # Диван -  3  шт., стоимость 3550  руб
