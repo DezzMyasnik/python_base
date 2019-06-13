@@ -27,7 +27,7 @@ point = (23, 34)
 #       операции сравнения дают булевы константы True и False
 
 distance = (point[0] ** 2 + point[1]**2 ) **.5
-print(True if distance < radius else False)
+print(True if distance < radius else False)  # TODO масло масляное) distance < radius это уже булевское значение
 
  # Аналогично для другой точки
 point_2 = (30, 30)

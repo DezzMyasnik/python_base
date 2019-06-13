@@ -35,3 +35,4 @@ for r in my_family_height:
     rost += r[1]
 
 print("Общий рост семьи - {} cм".format(rost))
+#зачет!
