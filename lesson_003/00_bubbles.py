@@ -13,7 +13,11 @@ for _ in range(3):
     sd.circle(center_position=point, radius=radius)
 
 # Написать функцию рисования пузырька, принммающую 2 (или более) параметра: точка рисовании и шаг
-# TODO здесь ваш код
+def draw_bubbles(point, step):
+    radius = 50
+    for _ in range(3):
+        radius += step
+        sd.circle(center_position=point, radius=radius)
 
 # Нарисовать 10 пузырьков в ряд
 # TODO здесь ваш код
