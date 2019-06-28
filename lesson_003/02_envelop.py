@@ -75,5 +75,15 @@ elif hole_y >= brick_y:
 elif hole_y >= brick_x:  
     if hole_x >= brick_y:
         print("ДА")
+elif hole_y >= brick_x:
+    if hole_x >= brick_z:
+        print("ДА")
+elif hole_y >= brick_y:
+    if hole_x >= brick_z:
+        print("ДА")
+elif hole_y >= brick_x:
+    if hole_x >= brick_y:
+        print("ДА")
+
 else:
     print("НЕТ")
