@@ -29,3 +29,4 @@ for color in rainbow_colors:
     sd.circle(point, 300 + i * step, color, width)
     i += 1
 sd.pause()
+#зачет!

@@ -8,7 +8,7 @@ import simple_draw as sd
 
 
 
-for x in range(15):
+for x in range(15): # TODO у range три параметра, попробуйте перенести подсчет текущего x, y в range
     for y in range(15):
         left_bottom = sd.get_point(0 + x * 100, 0 + y * 50)
         right_top = sd.get_point(100 + x * 100, 50 + y * 50)

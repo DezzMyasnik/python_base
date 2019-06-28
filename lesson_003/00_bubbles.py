@@ -37,5 +37,5 @@ for _ in range(100):
     draw_bubbles(point, 5, color)
 
 sd.pause()
-
+#зачет!
 

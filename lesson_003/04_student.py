@@ -19,3 +19,4 @@ while i < 10:
     i += 1
 
 print("Студенту надо попросить {} рублей".format(round(roditeli, 2)))
+#зачет!

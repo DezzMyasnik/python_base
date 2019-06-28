@@ -21,7 +21,7 @@ paper_x, paper_y = 9, 11
 # (просто раскоментировать нужную строку и проверить свой код)
 
 
-print("ДА") if envelop_x >= paper_x and envelop_y >= paper_y else print("НЕТ")
+print("ДА") if envelop_x >= paper_x and envelop_y >= paper_y else print("НЕТ")  # TODO лист можно поворачивать,
 
 # Усложненное задание, решать по желанию.
 # Заданы размеры hole_x, hole_y прямоугольного отверстия и размеры brick_х, brick_у, brick_z кирпича (все размеры
@@ -50,7 +50,7 @@ brick_x, brick_y, brick_z = 11, 3, 6
 # brick_x, brick_y, brick_z = 3, 11, 6
 # (просто раскоментировать нужную строку и проверить свой к
 
-if hole_x >= brick_x:
+if hole_x >= brick_x:  # TODO Вариантов поворота больше
     if hole_y >= brick_y:
         print("ДА")
 elif hole_x >= brick_x:

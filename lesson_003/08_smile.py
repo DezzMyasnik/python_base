@@ -29,3 +29,4 @@ for i in range(10):
     smile_draw(point.x, point.y, simple_draw.COLOR_YELLOW)
 
 simple_draw.pause()
+#зачет!
