@@ -53,7 +53,7 @@ brick_x, brick_y, brick_z = 3, 6, 5
 brick_x, brick_y, brick_z = 11, 6, 3
 # brick_x, brick_y, brick_z = 6, 11, 3
 # brick_x, brick_y, brick_z = 6, 3, 11
-# brick_x, brick_y, brick_z = 3, 6, 11
+brick_x, brick_y, brick_z = 3, 6, 11
 # brick_x, brick_y, brick_z = 3, 11, 6
 # (просто раскоментировать нужную строку и проверить свой к
 
