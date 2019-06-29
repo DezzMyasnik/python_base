@@ -8,11 +8,11 @@ import simple_draw as sd
 
 
 
-for x in range(15): # TODO у range три параметра, попробуйте перенести подсчет текущего x, y в range
-    for y in range(15):
-        left_bottom = sd.get_point(0 + x * 100, 0 + y * 50)
-        right_top = sd.get_point(100 + x * 100, 50 + y * 50)
-        if y % 2 != 0:
+for x in range(0,600, 100):
+    for y in range(0, 1500, 50):
+        left_bottom = sd.get_point(x, y)
+        right_top = sd.get_point(100 + x, 50 + y)
+        if y % 100 != 0:
             left_bottom.x -= 50
             right_top.x -= 50
         sd.rectangle(left_bottom, right_top, sd.COLOR_DARK_YELLOW, 2)
