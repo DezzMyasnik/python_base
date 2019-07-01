@@ -21,7 +21,7 @@ paper_x, paper_y = 9, 11
 # (просто раскоментировать нужную строку и проверить свой код)
 
 if envelop_x >= paper_x:
-    if envelop_y >= paper_y:
+    if envelop_y >= paper_y:  # TODO правильнее комбинировать условия с помощью логического оператора
         print("ДА")
 elif envelop_x >= paper_y:
     if envelop_y >= paper_x:

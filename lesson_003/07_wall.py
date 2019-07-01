@@ -18,3 +18,4 @@ for x in range(0,600, 100):
         sd.rectangle(left_bottom, right_top, sd.COLOR_DARK_YELLOW, 2)
 
 sd.pause()
+#зачет!
