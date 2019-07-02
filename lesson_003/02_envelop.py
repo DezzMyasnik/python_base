@@ -13,18 +13,16 @@ envelop_x, envelop_y = 10, 7
 # paper_x, paper_y = 8, 9
 # проверить для
 # paper_x, paper_y = 9, 8
-# paper_x, paper_y = 6, 8
+paper_x, paper_y = 6, 8
 # paper_x, paper_y = 8, 6
 # paper_x, paper_y = 3, 4
 # paper_x, paper_y = 11, 9
-paper_x, paper_y = 9, 11
+#paper_x, paper_y = 9, 11
 # (просто раскоментировать нужную строку и проверить свой код)
 
-if envelop_x >= paper_x:
-    if envelop_y >= paper_y:  # TODO правильнее комбинировать условия с помощью логического оператора
+if envelop_x >= paper_x and envelop_y >= paper_y:
         print("ДА")
-elif envelop_x >= paper_y:
-    if envelop_y >= paper_x:
+elif envelop_x >= paper_y and envelop_y >= paper_x:
         print("ДА")
 else:
     print("НЕТ")
@@ -60,17 +58,13 @@ brick_x, brick_y, brick_z = 3, 6, 11
 if hole_x >= brick_x:  # 
     if hole_y >= brick_y:
         print("ДА")
-elif hole_x >= brick_x:
-    if hole_y >= brick_z:
+elif hole_x >= brick_x and hole_y >= brick_z:
         print("ДА")
-elif hole_x >= brick_y:
-    if hole_y >= brick_z:
+elif hole_x >= brick_y and hole_y >= brick_z:
         print("ДА")
-elif hole_y >= brick_x:
-    if hole_x >= brick_z:
+elif hole_y >= brick_x and hole_x >= brick_z:
         print("ДА")
-elif hole_y >= brick_y:
-    if hole_x >= brick_z:
+elif hole_y >= brick_y and hole_x >= brick_z:
         print("ДА")
 elif hole_y >= brick_x:  
     if hole_x >= brick_y:
