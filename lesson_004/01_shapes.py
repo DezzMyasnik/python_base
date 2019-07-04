@@ -27,8 +27,39 @@ import simple_draw as sd
 # sd.line()
 # Результат решения см lesson_004/results/exercise_01_shapes.jpg
 
+def triangle(point, angle, lenght):
+    v1 = sd.get_vector(start_point=point, angle=angle, length=lenght, width=3)
+    v1.draw()
+
+    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 120, length=lenght, width=3)
+    v2.draw()
+
+    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 240, length=lenght, width=3)
+    v3.draw()
+
+def quadrat(point, angle, lenght):
+    v1 = sd.get_vector(start_point=point, angle=angle, length=lenght, width=3)
+    v1.draw()
+
+    v2 = sd.get_vector(start_point=v1.end_point, angle=angle + 90, length=lenght, width=3)
+    v2.draw()
+
+    v3 = sd.get_vector(start_point=v2.end_point, angle=angle + 180, length=lenght, width=3)
+
+    v3.draw()
+
+    v4 = sd.get_vector(start_point=v3.end_point, angle=angle + 270, length=lenght, width=3)
+
+    v4.draw()
 # TODO здесь ваш код
 
+triangle_point  = sd.get_point(100,100)
+
+triangle(triangle_point, 10, 100)
+
+quadrat_point = sd.get_point(400, 100)
+
+quadrat(quadrat_point, 0, 100)
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
 # Скажем, связывать точки не линиями, а дугами. Или двойными линиями. Или рисовать круги в угловых точках. Или...
