@@ -13,18 +13,23 @@ import simple_draw as sd
 def draw_branches(start_point, start_angle, start_length):
     if start_length < 10:
         return
-
-    for i in range(-30,31,60):
+    #v_root = sd.get_vector(start_point, 90, 0.3 * start_length, width=3)
+    #v_root.draw()
+    rand_angle = sd.random_number(30, 30 + int(0.4 * 30))
+    for i in range(-1 * rand_angle, rand_angle+1, rand_angle * 2):
         vi_angle = start_angle + i
         v1 = sd.get_vector(start_point=start_point, angle=vi_angle, length=start_length, width=3)
-        v1.draw()
-
+        v1.draw(sd.random_color())
+        length = sd.random_number(75, 75 + int(0.2 * 75 )) * 0.01
+        draw_branches(start_point=v1.end_point,start_angle=vi_angle, start_length= length * start_length)
     #v2_angle = start_angle - 30
     #v2 = sd.get_vector(start_point=start_point, angle=v2_angle, length=start_length, width=3)
     #v1.draw()
 
-
-point_0 = sd.get_point(300,0)
+sd.set_screen_size(1200,600)
+point_0 = sd.get_point(600, 30)
+v1 = sd.get_vector(point_0, 270, 30, 3)
+v1.draw()
 draw_branches(point_0, 90, 100)
 # 2) Сделать draw_branches рекурсивной
 # - добавить проверку на длину ветвей, если длина меньше 10 - не рисовать
@@ -43,7 +48,7 @@ draw_branches(point_0, 90, 100)
 
 # можно поиграть -шрифтами- цветами и углами отклонения
 
-# TODO здесь ваш код
+
 
 # 4) Усложненное задание (делать по желанию)
 # - сделать рандомное отклонение угла ветвей в пределах 40% от 30-ти градусов
@@ -51,7 +56,7 @@ draw_branches(point_0, 90, 100)
 # Возможный результат решения см lesson_004/results/exercise_04_fractal_02.jpg
 
 # Пригодятся функции
-# sd.random_number()
+#sd.random_number()
 
 sd.pause()
 
