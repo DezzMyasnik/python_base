@@ -34,7 +34,7 @@ def gexagon(point, angle, lenght, color):
 def sexagon(point, angle, lenght,color):
     draw_vector(6, point, angle, lenght, color)
 
-figs= {'1': dict(name="Треугольник"),
+figs= {'1': dict(name="Треугольник"),  # TODO функции тоже обекты, их можно помещать в словарь
        '2': dict(name='Квадрат'),
        '3': dict(name="пятиугольник"),
        '4': dict(name="шестиугольник")
@@ -43,7 +43,7 @@ figs= {'1': dict(name="Треугольник"),
 #i = 1
 #print(colors['{}'.format(i)]['name'])
 for item in figs:
-    print(str(item) + ":" + figs[str(item)]['name'])
+    print(str(item) + ":" + figs[str(item)]['name'])  # TODO см. задание 2
 #    print(item + ":" + item['{}'.format(item)]['name'])
 
 # TODO здесь ваш код

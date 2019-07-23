@@ -60,4 +60,4 @@ draw_branches(point_0, 90, 100)
 
 sd.pause()
 
-
+#зачет!

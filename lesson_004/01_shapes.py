@@ -174,3 +174,4 @@ gexagon(gexagon_point, 20, 100)
 sexagon_point = sd.get_point(400, 400)
 sexagon(sexagon_point, 20, 100)
 sd.pause()
+#зачет!

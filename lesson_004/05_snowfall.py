@@ -64,3 +64,4 @@ sd.pause()
 # Результат решения см https://youtu.be/XBx0JtxHiLg
 
 
+#зачет!
