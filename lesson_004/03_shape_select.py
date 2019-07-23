@@ -28,52 +28,51 @@ def triangle(point, angle, lenght, color):
 def quadrat(point, angle, lenght, color):
     draw_vector(4, point, angle, lenght, color)
 
-def gexagon(point, angle, lenght, color):
+def pentagon(point, angle, lenght, color):
     draw_vector(5, point, angle, lenght, color)
 
-def sexagon(point, angle, lenght,color):
+def gexagon(point, angle, lenght,color):
     draw_vector(6, point, angle, lenght, color)
 
-figs= {'1': dict(name="Треугольник"),  # TODO функции тоже обекты, их можно помещать в словарь
-       '2': dict(name='Квадрат'),
-       '3': dict(name="пятиугольник"),
-       '4': dict(name="шестиугольник")
+figs= {'1': dict(name="Треугольник", fun=triangle),  # TODO функции тоже обекты, их можно помещать в словарь
+       '2': dict(name='Квадрат', fun=quadrat),
+       '3': dict(name="пятиугольник", fun=pentagon),
+       '4': dict(name="шестиугольник", fun=gexagon)
        }
 
 #i = 1
 #print(colors['{}'.format(i)]['name'])
 for item in figs:
-    print(str(item) + ":" + figs[str(item)]['name'])  # TODO см. задание 2
-#    print(item + ":" + item['{}'.format(item)]['name'])
-
-# TODO здесь ваш код
+    print(item + ":" + figs[item]['name'])
 
 
 def init_vvod():
     print("Выбирете желаемую фигуру >")
-    promt = input()
-    if 0 > int(promt) or int(promt) > 4:
+    prom = input()
+    if 0 < int(prom) < 5:
+        print("Вы выбрали:" + figs[prom]['name'])
+    else:
         print("Вы ввели некорректный номер фигуры!")
         init_vvod()
-    else:
-        print("Вы выбрали:" + figs[str(promt)]['name'])
+    return prom
 
-    return promt
+#TODO вопрос: при первичном вводе неверного номера фигуры, выводиться сообщение о некорректном номере,
+# однако после ввода корректного номера выдается ошибка о неверном номере. возвращаемое функцией init_vvod
+# не перезаписывается в переменную prompt_1. туда почему то записывается первичный ввод?
 
-
-promt = init_vvod()
-
+promt_1 = init_vvod()
 center_point = sd.get_point(sd.resolution[0]/2, sd.resolution[1]/2)
 lenght = 100
 angle = 10
 color = sd.COLOR_YELLOW
-if promt == '1':
-    triangle(point=center_point, lenght=lenght, angle=angle, color=color)
-elif promt == '2':
-    quadrat(point=center_point, lenght=lenght, angle=angle, color=color)
-elif promt == '3':
-    gexagon(point=center_point, lenght=lenght, angle=angle, color=color)
-else:
-    sexagon(point=center_point, lenght=lenght, angle=angle, color=color)
+figs[promt_1]['fun'](point=center_point, lenght=lenght, angle=angle, color=color)
+#if promt == '1':
+#
+#elif promt == '2':
+#    quadrat(point=center_point, lenght=lenght, angle=angle, color=color)
+#elif promt == '3':
+#    gexagon(point=center_point, lenght=lenght, angle=angle, color=color)
+#else:
+#   sexagon(point=center_point, lenght=lenght, angle=angle, color=color)
 
 sd.pause()
