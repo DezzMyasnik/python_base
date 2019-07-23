@@ -26,7 +26,7 @@ import simple_draw as sd
 # sd.get_vector()
 # sd.line()
 # Результат решения см lesson_004/results/exercise_01_shapes.jpg
-
+"""""
 def triangle(point, angle, lenght):
     v1 = sd.get_vector(start_point=point, angle=angle, length=lenght, width=3)
     v1.draw()
@@ -109,7 +109,7 @@ gexagon(gexagon_point, 0, 100)
 
 sexagon_point = sd.get_point(400, 400)
 sexagon(sexagon_point, 0, 100)
-
+"""
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
 # Скажем, связывать точки не линиями, а дугами. Или двойными линиями. Или рисовать круги в угловых точках. Или...
@@ -134,4 +134,43 @@ sexagon(sexagon_point, 0, 100)
 # Будьте ленивыми, не используйте копи-пасту!
 
 
+def draw_vector(count_angle, start_point, start_angle, lenght):
+    angle = 360/count_angle
+    local_point = start_point
+    for i in range(count_angle):
+        v1 = sd.get_vector(start_point=local_point, angle=start_angle + i * angle, length=lenght, width=3)
+        v1.draw()
+        local_point = v1.end_point
+        if i == count_angle - 1:
+            sd.line(local_point, start_point, sd.COLOR_YELLOW, width=3)
+
+
+
+
+
+def triangle(point, angle, lenght):
+    draw_vector(3, point, angle, lenght)
+
+
+def quadrat(point, angle, lenght):
+    draw_vector(4, point, angle, lenght)
+
+
+def gexagon(point, angle, lenght):
+    draw_vector(5, point, angle, lenght)
+
+def sexagon(point, angle, lenght):
+    draw_vector(6, point, angle, lenght)
+
+triangle_point = sd.get_point(100, 100)
+triangle(triangle_point, 10, 100)
+
+quad_point = sd.get_point(400, 100)
+quadrat(quad_point, 10, 100)
+
+gexagon_point = sd.get_point(100, 400)
+gexagon(gexagon_point, 20, 100)
+
+sexagon_point = sd.get_point(400, 400)
+sexagon(sexagon_point, 20, 100)
 sd.pause()
