@@ -57,8 +57,9 @@ def sexagon(point, angle, lenght,color):
 
 #i = 1
 #print(colors['{}'.format(i)]['name'])
-for item in colors:  # TODO используйте items
-    print(item + ":" + colors['{}'.format(item)]['name'])  # TODO  почему так сложно? colors[item]
+for item in colors:  #
+    print(item + ":" + colors[item]['name'])
+    #print(item + ":" + colors['{}'.format(item)]['name'])
 #    print(item + ":" + item['{}'.format(item)]['name'])
 
 
