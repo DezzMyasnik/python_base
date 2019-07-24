@@ -47,14 +47,14 @@ for item in figs:
 
 
 def init_vvod():
-    print("Выбирете желаемую фигуру >")
-    prom = input()
-    if 0 < int(prom) < 5:
-        print("Вы выбрали:" + figs[prom]['name'])
-    else:
-        print("Вы ввели некорректный номер фигуры!")
-        init_vvod()  # TODO лучше не использовать рекурсию, а бесконечный цикл пока не ввели правильное значение
-    return prom   # TODO посмотрите что вы возращаете, и чем это иницилизируется
+    while True:
+        print("Выбирете желаемую фигуру >")
+        prom = input()
+        if 0 < int(prom) < 5:
+            print("Вы выбрали:" + figs[prom]['name'])
+            return prom
+        else:
+            print("Вы ввели некорректный номер фигуры!")
 
 
 promt_1 = init_vvod()

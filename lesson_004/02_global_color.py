@@ -49,10 +49,10 @@ def triangle(point, angle, lenght, color):
 def quadrat(point, angle, lenght, color):
     draw_vector(4, point, angle, lenght, color)
 
-def gexagon(point, angle, lenght, color):
+def pentagon(point, angle, lenght, color):
     draw_vector(5, point, angle, lenght, color)
 
-def sexagon(point, angle, lenght,color):
+def gexagon(point, angle, lenght,color):
     draw_vector(6, point, angle, lenght, color)
 
 #i = 1
@@ -65,26 +65,30 @@ for item in colors:  #
 
 
 def init_vvod():
-    print("Введите номер цвета:")
-    promt = input()
-    if 0 > int(promt) or int(promt) > 15:
-        print("Вы ввели некорректный номер цвета!")
-        init_vvod() # TODO лучше не использовать рекурсию, а бесконечный цикл пока не ввели правильное значение
-    else:
-        print("Вы выбрали:" + colors[str(promt)]['name'])
+    while True:
+        print("Введите номер цвета:")
+        promt = input()
+        if 0 > int(promt) or int(promt) > 15:
+            print("Вы ввели некорректный номер цвета!")
 
-        triangle_point = sd.get_point(100, 100)
-        triangle(triangle_point, 10, 100, colors[str(promt)]['color'])
-
-        quad_point = sd.get_point(400, 100)
-        quadrat(quad_point, 10, 100, colors[promt]['color'])
-
-        gexagon_point = sd.get_point(100, 400)
-        gexagon(gexagon_point, 20, 100, colors[promt]['color'])
-
-        sexagon_point = sd.get_point(400, 400)
-        sexagon(sexagon_point, 20, 100, colors[promt]['color'])
+        else:
+            print("Вы выбрали:" + colors[promt]['name'])
+            return promt
 
 
-init_vvod()
+
+
+
+promt = init_vvod()
+triangle_point = sd.get_point(100, 100)
+triangle(triangle_point, 10, 100, colors[promt]['color'])
+
+quad_point = sd.get_point(400, 100)
+quadrat(quad_point, 10, 100, colors[promt]['color'])
+
+pentagon_point = sd.get_point(100, 400)
+pentagon(pentagon_point, 20, 100, colors[promt]['color'])
+
+gexagon_point = sd.get_point(400, 400)
+gexagon(gexagon_point, 20, 100, colors[promt]['color'])
 sd.pause()
