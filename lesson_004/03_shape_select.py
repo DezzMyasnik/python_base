@@ -34,7 +34,7 @@ def pentagon(point, angle, lenght, color):
 def gexagon(point, angle, lenght,color):
     draw_vector(6, point, angle, lenght, color)
 
-figs= {'1': dict(name="Треугольник", fun=triangle),  # TODO функции тоже обекты, их можно помещать в словарь
+figs= {'1': dict(name="Треугольник", fun=triangle),
        '2': dict(name='Квадрат', fun=quadrat),
        '3': dict(name="пятиугольник", fun=pentagon),
        '4': dict(name="шестиугольник", fun=gexagon)
@@ -53,12 +53,9 @@ def init_vvod():
         print("Вы выбрали:" + figs[prom]['name'])
     else:
         print("Вы ввели некорректный номер фигуры!")
-        init_vvod()
-    return prom
+        init_vvod()  # TODO лучше не использовать рекурсию, а бесконечный цикл пока не ввели правильное значение
+    return prom   # TODO посмотрите что вы возращаете, и чем это иницилизируется
 
-#TODO вопрос: при первичном вводе неверного номера фигуры, выводиться сообщение о некорректном номере,
-# однако после ввода корректного номера выдается ошибка о неверном номере. возвращаемое функцией init_vvod
-# не перезаписывается в переменную prompt_1. туда почему то записывается первичный ввод?
 
 promt_1 = init_vvod()
 center_point = sd.get_point(sd.resolution[0]/2, sd.resolution[1]/2)
@@ -66,13 +63,6 @@ lenght = 100
 angle = 10
 color = sd.COLOR_YELLOW
 figs[promt_1]['fun'](point=center_point, lenght=lenght, angle=angle, color=color)
-#if promt == '1':
-#
-#elif promt == '2':
-#    quadrat(point=center_point, lenght=lenght, angle=angle, color=color)
-#elif promt == '3':
-#    gexagon(point=center_point, lenght=lenght, angle=angle, color=color)
-#else:
-#   sexagon(point=center_point, lenght=lenght, angle=angle, color=color)
+
 
 sd.pause()

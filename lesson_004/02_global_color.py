@@ -69,7 +69,7 @@ def init_vvod():
     promt = input()
     if 0 > int(promt) or int(promt) > 15:
         print("Вы ввели некорректный номер цвета!")
-        init_vvod()
+        init_vvod() # TODO лучше не использовать рекурсию, а бесконечный цикл пока не ввели правильное значение
     else:
         print("Вы выбрали:" + colors[str(promt)]['name'])
 
