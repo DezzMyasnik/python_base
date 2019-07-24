@@ -92,3 +92,4 @@ pentagon(pentagon_point, 20, 100, colors[promt]['color'])
 gexagon_point = sd.get_point(400, 400)
 gexagon(gexagon_point, 20, 100, colors[promt]['color'])
 sd.pause()
+#зачет!

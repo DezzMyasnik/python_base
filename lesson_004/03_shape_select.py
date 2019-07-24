@@ -66,3 +66,4 @@ figs[promt_1]['fun'](point=center_point, lenght=lenght, angle=angle, color=color
 
 
 sd.pause()
+#зачет!
