@@ -31,7 +31,7 @@ def triangle(point, angle=0):
 
 point_0 = sd.get_point(300, 300)
 
-for angle in range(0, 361, 30):
+for angle in range(0, 60, 30):
     triangle(point=point_0, angle=angle)
 
 sd.pause()

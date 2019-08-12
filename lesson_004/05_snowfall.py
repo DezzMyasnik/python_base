@@ -26,19 +26,21 @@ for i in range(N):
 while True:
 
     #sd.clear_screen()
+    lenght = sd.random_number(10, 70)
     for item in list:
         sd.start_drawing()
         point = sd.get_point(item[1], item[0])
-        sd.snowflake(center=point, length=50, color=sd.background_color)
+
+        sd.snowflake(center=point, length=lenght, color=sd.background_color)
 
         item[0] -= sd.random_number(-20, 50)
         if item[0] < 50:
             point = sd.get_point(item[1], item[0])
-            sd.snowflake(center=point, length=50, color=sd.COLOR_WHITE)
+            sd.snowflake(center=point, length=lenght, color=sd.COLOR_WHITE)
 
         item[1] = item[1] + sd.random_number(1, 50)
         point = sd.get_point(item[1], item[0])
-        sd.snowflake(center=point, length=50, color=sd.COLOR_WHITE)
+        sd.snowflake(center=point, length=lenght, color=sd.COLOR_WHITE)
 
         sd.finish_drawing()
         sd.sleep(0.01)

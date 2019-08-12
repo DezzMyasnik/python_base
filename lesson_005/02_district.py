@@ -5,7 +5,7 @@
 # подсказка: для вывода элементов списка через запятую можно использовать функцию строки .join()
 # https://docs.python.org/3/library/stdtypes.html#str.join
 
-# TODO здесь ваш код
+
 from district.central_street.house1 import room1 as room11, room2 as room22
 from district.central_street.house2 import room1, room2
 #from district.soviet_street import house1, house2
