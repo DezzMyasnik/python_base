@@ -32,3 +32,4 @@ print("На Советской улице живут: {}".format(", ".join(s_roo
                                             s_room12.folks +
                                             s_room22.folks
                                             )))
+#зачет!
