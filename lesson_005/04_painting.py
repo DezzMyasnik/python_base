@@ -39,8 +39,6 @@ smile.smile_draw(275,200,sd.COLOR_YELLOW)
 wall.triangle(sd.get_point(80,300), 0, 380, sd.COLOR_DARK_RED)
 tree_point = sd.get_point(630, 100)
 
-
-
 fractal.draw_tree(tree_point, 50)
 tree_point = sd.get_point(780, 90)
 fractal.draw_tree(tree_point, 50)
@@ -49,6 +47,7 @@ fractal.draw_tree(tree_point, 40)
 snowfall.sugrob(sd.get_point(80, 65), 20)
 smile.sun(sd.get_point(150,500))
 sd.pause()
+#зачет!
 
 # Усложненное задание (делать по желанию)
 # Анимировать картину.

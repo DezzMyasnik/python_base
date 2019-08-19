@@ -11,3 +11,4 @@ import room_2 as secondroom
 print("В комнате " + room_1.__name__ + " живут: " + " и ".join(room_1.folks))
 print("В комнате " + secondroom.__name__ + " живут: " + " и ".join(secondroom.folks))
 
+#зачет!

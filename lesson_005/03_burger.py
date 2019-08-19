@@ -25,3 +25,4 @@ my_burger.add_onion('красный лук')
 my_burger.add_tomat('помидор')
 my_burger.add_souse('горчица')
 my_burger.add_priprava('приправой для гриля')
+#зачет!
