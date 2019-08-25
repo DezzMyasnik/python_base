@@ -43,4 +43,36 @@
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
-# TODO здесь ваш код...
+
+from mastermind_engine import generator_int, main_proverka,povtor
+
+
+
+zagadannoe_chislo = generator_int(4)
+
+
+def main_cille():
+    while True:
+        print("Введите 4-значное число:")
+        user_input = input()
+        if user_input.isdigit():
+            if user_input.__len__() != 4:
+                print("Вы ввели не 4-х значное число")
+            else:
+                if povtor(user_input) == False:
+                    res = main_proverka(user_input)
+                    print("Вы ввели 4-х значное число")
+                    print(res)
+                    if res['bulls'] == 4:
+                        print('Вы победили!!!')
+                        return False
+                else:
+                    print("Введите 4-х значное числов без повторяющихся цифр")
+
+
+        else:
+            print("Вы ввели не число")
+
+
+
+main_cille()
