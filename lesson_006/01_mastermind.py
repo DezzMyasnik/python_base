@@ -61,7 +61,7 @@ def main_cille():
             else:
                 if povtor(user_input) == False:
                     res = main_proverka(user_input)
-                    print("Вы ввели 4-х значное число")
+                    #print("Вы ввели 4-х значное число")
                     print(res)
                     if res['bulls'] == 4:
                         print('Вы победили!!!')
