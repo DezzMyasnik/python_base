@@ -169,7 +169,7 @@ quad_point = sd.get_point(400, 100)
 quadrat(quad_point, 10, 100)
 
 gexagon_point = sd.get_point(100, 400)
-gexagon(gexagon_point, 20, 100)
+gexagon(gexagon_point, 200, 100)
 
 sexagon_point = sd.get_point(400, 400)
 sexagon(sexagon_point, 20, 100)
