@@ -49,7 +49,7 @@ from mastermind_engine import generator_int, main_proverka,povtor
 
 
 zagadannoe_chislo = generator_int(4)
-print(zagadannoe_chislo)
+#print(zagadannoe_chislo)
 
 def main_loop():
     while True:
