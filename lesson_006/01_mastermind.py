@@ -56,10 +56,10 @@ def main_cille():
         print("Введите 4-значное число:")
         user_input = input()
         if user_input.isdigit():
-            if user_input.__len__() != 4:
+            if user_input.__len__() != 4:  # TODO есть функция len
                 print("Вы ввели не 4-х значное число")
             else:
-                if povtor(user_input) == False:
+                if povtor(user_input) == False:  # TODO бул не так проверяют
                     res = main_proverka(user_input)
                     #print("Вы ввели 4-х значное число")
                     print(res)
@@ -75,4 +75,4 @@ def main_cille():
 
 
 
-main_cille()
+main_cille()  # TODO loop это цикл по англ

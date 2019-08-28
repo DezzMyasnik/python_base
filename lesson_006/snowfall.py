@@ -1,7 +1,7 @@
 import simple_draw as sd
 
 sd.set_screen_size(1200, 600)
-list = []
+list = []  # TODO не используйте зарезервированные слова
 def create_snow(count):
 
     global list
@@ -26,7 +26,7 @@ def change_point(step):
         list_out.append(local)
     list = []
     list.extend(list_out)
-del_list = []
+del_list = []  # TODO это не глобальная переменная, а то что возращает check_snow, как в условии
 def check_snow():
     global list, del_list
     del_list = []
@@ -39,7 +39,7 @@ def check_snow():
 
 
 
-def delete():
+def delete():  # TODO должна принимать список для удаления, как в условии
     global list, del_list
     for item in del_list:
         list.remove(list[item])
