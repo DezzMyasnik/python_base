@@ -1,45 +1,46 @@
 import simple_draw as sd
 
 sd.set_screen_size(1200, 600)
-list = []  # TODO не используйте зарезервированные слова
+list_snowflakes = []
 def create_snow(count):
 
-    global list
+    global list_snowflakes
 
     for i in range(count):
         local = [sd.random_number(500, 600), sd.random_number(100, 800), sd.random_number(10, 70)]
-        list.append(local)
+        list_snowflakes.append(local)
 
 
 def draw_snow(color):
-    global list
-    for item in list:
+    global list_snowflakes
+    for item in list_snowflakes:
         point = sd.get_point(item[1], item[0])
         sd.snowflake(center=point, length=item[2], color=color)
 
 
 def change_point(step):
-    global list
+    global list_snowflakes
     list_out = []
-    for item in list:
+    for item in list_snowflakes:
         local = [int(item[0]) - sd.randint(2, step), int(item[1]) + sd.randint(2,step), item[2]]
         list_out.append(local)
-    list = []
-    list.extend(list_out)
-del_list = []  # TODO это не глобальная переменная, а то что возращает check_snow, как в условии
+    list_snowflakes = []
+    list_snowflakes.extend(list_out)
+#del_list = []
 def check_snow():
-    global list, del_list
+    global list_snowflakes
     del_list = []
-    for id, item in enumerate(list):
+    for id, item in enumerate(list_snowflakes):
         if (item[0] - item [2]) < 0:
 
             if id not in del_list:
                 del_list.append(id)
-                return True
+
+    return del_list
 
 
+def delete(del_list):
+    global list_snowflakes
 
-def delete():  # TODO должна принимать список для удаления, как в условии
-    global list, del_list
     for item in del_list:
-        list.remove(list[item])
+        list_snowflakes.remove(list_snowflakes[item])

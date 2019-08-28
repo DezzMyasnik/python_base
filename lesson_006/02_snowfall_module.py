@@ -20,9 +20,10 @@ while True:
     sf.draw_snow(sd.background_color)
     sf.change_point(sd.randint(2, 20))
     sf.draw_snow(sd.COLOR_WHITE)
-    if sf.check_snow():
-        sf.delete()
-        sf.create_snow(sf.del_list.__len__())
+    final_flake = sf.check_snow()
+    if len(final_flake) > 0:
+        sf.delete(final_flake)
+        sf.create_snow(len(final_flake))
     #  нарисовать_снежинки_цветом(color=sd.background_color)
     #  сдвинуть_снежинки()
     #  нарисовать_снежинки_цветом(color)
