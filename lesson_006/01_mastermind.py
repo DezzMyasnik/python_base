@@ -59,7 +59,7 @@ def main_loop():
             if len(user_input) != 4:
                 print("Вы ввели не 4-х значное число")
             else:
-                if povtor(user_input):
+                if povtor(user_input):  # TODO название функции не соотвествует возращаемому значению
                     res = main_proverka(user_input)
                     #print("Вы ввели 4-х значное число")
                     print(res)

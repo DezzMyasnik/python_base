@@ -24,7 +24,7 @@ def change_point(step):
     for item in list_snowflakes:
         local = [int(item[0]) - sd.randint(2, step), int(item[1]) + sd.randint(2,step), item[2]]
         list_out.append(local)
-    list_snowflakes = []
+    list_snowflakes = []  # TODO а если просто list_snowflakes = list_out
     list_snowflakes.extend(list_out)
 #del_list = []
 def check_snow():
@@ -33,7 +33,7 @@ def check_snow():
     for id, item in enumerate(list_snowflakes):
         if (item[0] - item [2]) < 0:
 
-            if id not in del_list:
+            if id not in del_list:  # TODO а это возможно -  id in del_list?
                 del_list.append(id)
 
     return del_list
@@ -42,5 +42,6 @@ def check_snow():
 def delete(del_list):
     global list_snowflakes
 
-    for item in del_list:
+    for item in del_list:  # TODO у вас есть индексы удаялть быстрее сразу по ним,
+        # чтобы не было проблем в обратном порядке так как они отсортированны по возрастанию
         list_snowflakes.remove(list_snowflakes[item])

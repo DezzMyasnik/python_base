@@ -33,7 +33,7 @@ def main_proverka(test_str):
     bull = 0
     for i in range(0, len(test_str)):
         if int(test_str[i]) in _holder:
-            cow += 1
+            cow += 1  # TODO Опять не так - если мы засчитали это как бык, то коровы не должны увеличиваться
         if int(test_str[i]) == _holder[i]:
             bull += 1
     result = {
