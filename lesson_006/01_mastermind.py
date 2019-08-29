@@ -44,7 +44,7 @@
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
 
-from mastermind_engine import generator_int, main_proverka,povtor
+from mastermind_engine import generator_int, main_proverka,check_povtor
 
 
 
@@ -59,7 +59,7 @@ def main_loop():
             if len(user_input) != 4:
                 print("Вы ввели не 4-х значное число")
             else:
-                if povtor(user_input):  # TODO название функции не соотвествует возращаемому значению
+                if check_povtor(user_input):
                     res = main_proverka(user_input)
                     #print("Вы ввели 4-х значное число")
                     print(res)

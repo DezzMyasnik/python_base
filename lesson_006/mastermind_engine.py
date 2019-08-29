@@ -32,10 +32,13 @@ def main_proverka(test_str):
     # сумма не сможет быть больше 4 так как до этого происходить проверка на длину строки вводимой пользователем
     bull = 0
     for i in range(0, len(test_str)):
-        if int(test_str[i]) in _holder:
-            cow += 1  # TODO Опять не так - если мы засчитали это как бык, то коровы не должны увеличиваться
+        #if int(test_str[i]) in _holder:
+        #    cow += 1
         if int(test_str[i]) == _holder[i]:
             bull += 1
+        elif int(test_str[i]) in _holder:
+            cow += 1
+
     result = {
         'bulls': bull,
         'cows': cow
@@ -43,5 +46,5 @@ def main_proverka(test_str):
     return result
 
 
-def povtor(test_str):
+def check_povtor(test_str):
     return len(set(test_str)) == 4

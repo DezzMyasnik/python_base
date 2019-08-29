@@ -7,11 +7,11 @@ sd.set_screen_size(1200, 600)
 # - создать списки данных для отрисовки N снежинок
 # - нарисовать падение этих N снежинок
 # - создать список рандомных длинн лучей снежинок (от 10 до 100) и пусть все снежинки будут разные
-list = []
+list_snowflakes = []
 N = 20
 for i in range(N):
     local = [sd.random_number(400, 600), sd.random_number(100,300)]
-    list.append(local)
+    list_snowflakes.append(local)
 
 
 # Пригодятся функции
@@ -27,7 +27,7 @@ while True:
 
     #sd.clear_screen()
     lenght = sd.random_number(10, 70)
-    for item in list:
+    for item in list_snowflakes:
         sd.start_drawing()
         point = sd.get_point(item[1], item[0])
 
