@@ -73,6 +73,6 @@ def main_loop():
         else:
             print("Вы ввели не число")
 
-
-
 main_loop()
+
+#зачет!

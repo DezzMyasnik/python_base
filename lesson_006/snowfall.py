@@ -40,5 +40,6 @@ def check_snow():
 
 def delete(del_list):
     global list_snowflakes
-    for item in del_list:
+    for item in del_list:  # TODO обходить список индексов нужно в обратном порядке,
+        # так как из-за удаления стары индексы не валидны уже
         del list_snowflakes[item]

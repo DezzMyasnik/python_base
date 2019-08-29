@@ -16,7 +16,7 @@ def generator_int(size):
 
 def proverka(input_arr, test_int):
     while test_int in input_arr:
-             test_int = randint(0,9)
+        test_int = randint(0,9)
 
 
     return test_int
@@ -48,3 +48,4 @@ def main_proverka(test_str):
 
 def check_povtor(test_str):
     return len(set(test_str)) == 4
+#зачет!
