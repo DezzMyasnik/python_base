@@ -40,9 +40,6 @@ def check_snow():
 
 def delete(del_list):
     global list_snowflakes
-    for item in reversed(del_list):
-        # так как из-за удаления стары индексы не валидны уже
+    for item in reversed(del_list):  # так ок
         del list_snowflakes[item]
-        #TODO честно, я не совсем понимаю, что от меня требуется. Требуется после удаления из
-        # list_snowflakes по индексу, затем удалить этот индекс из del_list? Разве можно изменять набор данных,
-        # по которому двигается цикл?
+#зачет!
