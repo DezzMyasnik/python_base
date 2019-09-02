@@ -6,12 +6,33 @@ import simple_draw as sd
 #  - создание снежинки с нужными параметрами
 #  - отработку изменений координат
 #  - отрисовку
-
+sd.set_screen_size(1200,600)
 
 class Snowflake:
-    pass
+    def __init__(self):
 
-    # TODO здесь ваш код
+        self.lenght = sd.random_number(10, 70)
+        self.center_point = sd.get_point(sd.random_number(100, 200), sd.random_number(100, 600))
+
+    def clear_previous_picture(self):
+        sd.snowflake(center=self.center_point, length=self.lenght, color=sd.background_color)
+
+    def move(self):
+        self.center_point = sd.get_point(self.center_point.x + sd.randint(2, 10),
+                                         self.center_point.y - sd.randint(2, 10))
+
+    def draw(self):
+        sd.snowflake(center=self.center_point, length=self.lenght, color=sd.COLOR_WHITE)
+
+
+    def can_fall(self):
+        return self.center_point.y > 0
+
+
+    def __del__(self):
+        self.center_point = None
+        self.lenght = None
+
 
 
 flake = Snowflake()
