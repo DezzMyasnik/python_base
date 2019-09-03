@@ -12,7 +12,7 @@ class Snowflake:
     def __init__(self):
 
         self.lenght = sd.random_number(10, 70)
-        self.center_point = sd.get_point(sd.random_number(100, 200), sd.random_number(100, 600))
+        self.center_point = sd.get_point(sd.random_number(100, 400), sd.random_number(500, 600))
 
     def clear_previous_picture(self):
         sd.snowflake(center=self.center_point, length=self.lenght, color=sd.background_color)
@@ -34,7 +34,7 @@ class Snowflake:
         self.lenght = None
 
 
-
+'''
 flake = Snowflake()
 
 while True:
@@ -46,19 +46,48 @@ while True:
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
+'''
+def get_flakes(count):
+    fl = []
+    for i in range(count):
+        one_flake = Snowflake()
+        fl.append(one_flake)
+    return fl   
+
+
 
 # шаг 2: создать снегопад - список объектов Снежинка в отдельном списке, обработку примерно так:
-# flakes = get_flakes(count=N)  # создать список снежинок
-# while True:
-#     for flake in flakes:
-#         flake.clear_previous_picture()
-#         flake.move()
-#         flake.draw()
-#     fallen_flakes = get_fallen_flakes()  # подчитать сколько снежинок уже упало
-#     if fallen_flakes:
-#         append_flakes(count=fallen_flakes)  # добавить еще сверху
-#     sd.sleep(0.1)
-#     if sd.user_want_exit():
-#         break
+flakes = get_flakes(count=20)  # создать список снежинок
+
+def get_fallen_flakes():
+    i=0
+    for item in reversed(flakes):
+        if not item.can_fall():
+            flakes.remove(item)
+            i += 1
+    return  i
+
+
+def append_flakes(count):
+    item = get_flakes(count)
+    flakes.extend(item)
+
+
+while True:
+    for flake in flakes:
+        flake.clear_previous_picture()
+        flake.move()
+        flake.draw()
+    fallen_flakes = get_fallen_flakes()  # подчитать сколько снежинок уже упало
+    #print (fallen_flakes)
+    if fallen_flakes:
+        append_flakes(count=fallen_flakes)  # добавить еще сверху
+    sd.sleep(0.1)
+    if sd.user_want_exit():
+        break
+
+
+
+
 
 sd.pause()
