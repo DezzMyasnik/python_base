@@ -47,10 +47,27 @@ class Man:
         else:
             cprint('{} деньги кончились!'.format(self.name), color='red')
 
+    def buy_cats_eat(self):
+        if self.house.money >=50:
+            cprint('{} сходил в магазин за кошачей едой'.format(self.name), color='magenta')
+            self.house.cats_eat += 50
+            self.house.money -= 50
+        else:
+            cprint('{} деньги кончились!'.format(self.name), color='red')
+
     def go_to_the_house(self, house):
         self.house = house
         self.fullness -= 10
         cprint('{} Вьехал в дом'.format(self.name), color='cyan')
+
+    def get_cat(self, cat):
+        cat.house = self.house
+        cprint('{} подобрал кота {}'.format(self.name, cat.name))
+
+    def cleanup(self):
+        self.house.dust -= 100
+        self.fullness -= 20
+        cprint('{} убрался в доме'.format(self.name), color='blue')
 
     def act(self):
         if self.fullness <= 0:
@@ -63,10 +80,17 @@ class Man:
             self.shopping()
         elif self.house.money < 50:
             self.work()
+        elif self.house.cats_eat < 20:
+            self.buy_cats_eat()
         elif dice == 1:
             self.work()
         elif dice == 2:
             self.eat()
+        elif dice == 3:
+            if self.house.dust >= 100:
+                if self.fullness <= 20:
+                    self.eat()
+                self.cleanup()
         else:
             self.watch_MTV()
 
@@ -78,8 +102,13 @@ class House:
         self.money = 0
 
     def __str__(self):
+
         return 'В доме еды осталось {}, денег осталось {}'.format(
             self.food, self.money)
+
+
+
+
 
 
 citizens = [
@@ -89,9 +118,12 @@ citizens = [
 ]
 
 
+"""""
 my_sweet_home = House()
 for citisen in citizens:
-    citisen.go_to_the_house(house=my_sweet_home)
+    citisen.go_to_the_house(house=House())
+
+
 
 for day in range(1, 366):
     print('================ день {} =================='.format(day))
@@ -105,3 +137,4 @@ for day in range(1, 366):
 # Создадим двух людей, живущих в одном доме - Бивиса и Батхеда
 # Нужен класс Дом, в нем должн быть холодильник с едой и тумбочка с деньгами
 # Еда пусть хранится в холодильнике в доме, а деньги - в тумбочке.
+"""
