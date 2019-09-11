@@ -116,7 +116,7 @@ print(Fire(), "+", Earth(), "=", Fire() + Earth())
 
 print(Earth(), "+", Earth(), "=", Earth() + Earth())
 
-
+#зачет!
 
 
 # Усложненное задание (делать по желанию)

@@ -184,7 +184,7 @@ cats = [Cat(name='Барсик'), Cat(name='Борис'), Cat(name='Шерстя
 man.go_to_the_house(house=home)
 for cat in cats:
     man.get_cat(cat)
-home.cats_eat = 50
+home.cats_eat = 50  # TODO почему не в __init__
 home.dust = 0
 for day in range(1, 366):
     print('================ день {} =================='.format(day))

@@ -94,3 +94,4 @@ while True:
 
 
 sd.pause()
+#зачет!
