@@ -25,14 +25,14 @@ class Water:
         self.content = "вода"
 
     def __str__(self):
-        return "Вода"  # TODO зачем дубировать с content?
+        return self.content
 
     def __add__(self, other):
-        if  other.content == 'воздух':  # TODO правильнее проверять тип other
+        if  type(other) is Air:
             return Storm()
-        elif other.content == 'огонь':
+        elif type(other) is Fire:
             return Par()
-        elif other.content == 'земля':
+        elif type(other) is Earth:
             return Graz()
 
 
@@ -41,14 +41,14 @@ class Air:
         self.content = "воздух"
 
     def __str__(self):
-        return "Воздух"
+        return self.content
 
     def __add__(self, other):
-        if other.content == 'вода':
+        if type(other) is Water:
             return Storm()
-        elif other.content == 'огонь':
+        elif type(other) is Fire:
             return Flash()
-        elif other.content == 'земля':
+        elif type(other) is Earth:
             return Dust()
 
 
@@ -57,14 +57,14 @@ class Fire:
         self.content = "огонь"
 
     def __str__(self):
-        return "Огонь"
+        return self.content
 
     def __add__(self, other):
-        if other.content == 'вода':
+        if type(other) is Water:
             return Par()
-        elif other.content == 'земля':
+        elif type(other) is Earth:
             return Lawa()
-        elif other.content == 'воздух':
+        elif type(other) is Air:
             return Flash()
 
 
@@ -73,14 +73,14 @@ class Earth:
         self.content = "земля"
 
     def __str__(self):
-        return "Земля"
+        return self.content
 
     def __add__(self, other):
-        if other.content == 'вода':
+        if type(other) is Water:
             return Graz()
-        elif other.content == 'огонь':
+        elif type(other) is Fire:
             return Lawa()
-        elif other.content == 'воздух':
+        elif type(other) is Air:
             return Dust()
 
 
