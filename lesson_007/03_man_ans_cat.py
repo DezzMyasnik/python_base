@@ -31,8 +31,8 @@ class Cat:
         self.house = None
 
     def __str__(self):
-        return 'Кот - {}, сытость {}, кошачей еды - {}, грязи - {}'.format(
-            self.name, self.fullness, self.house.cats_eat, self.house.dust)
+        return 'Кот - {}, сытость {}'.format(
+            self.name, self.fullness, )
 
     def cat_sleep(self):
         self.fullness -= 10
@@ -78,21 +78,23 @@ class Cat:
 
 man = Man(name='Батхед')
 home = House()
-cat = Cat(name='Барсик')
-
+#cat = Cat(name='Барсик')
+cats = [Cat(name='Барсик'), Cat(name='Борис'), Cat(name='Шерстяной')]
 man.go_to_the_house(house=home)
-man.get_cat(cat)
+for cat in cats:
+    man.get_cat(cat)
 home.cats_eat = 50
 home.dust = 0
 for day in range(1, 366):
     print('================ день {} =================='.format(day))
     man.act()
 
-
-    cat.act()
+    for cat in cats:
+        cat.act()
     print('--- в конце дня ---')
     print(man)
-    print(cat)
+    for cat in cats:
+        print(cat)
     print(home)
 
 # TODO здесь ваш код

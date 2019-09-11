@@ -32,7 +32,7 @@ class Man:
 
     def work(self):
         cprint('{} сходил на работу'.format(self.name), color='blue')
-        self.house.money += 50
+        self.house.money += 150
         self.fullness -= 10
 
     def watch_MTV(self):
@@ -76,11 +76,14 @@ class Man:
         dice = randint(1, 6)
         if self.fullness < 20:
             self.eat()
+            #иначе еда кончается и на этом действия человека замораживаются
+            if self.house.food < 10:
+                self.shopping()
         elif self.house.food < 10:
             self.shopping()
         elif self.house.money < 50:
             self.work()
-        elif self.house.cats_eat < 20:
+        elif self.house.cats_eat <= 20:
             self.buy_cats_eat()
         elif dice == 1:
             self.work()
@@ -102,9 +105,11 @@ class House:
         self.money = 0
 
     def __str__(self):
-
-        return 'В доме еды осталось {}, денег осталось {}'.format(
-            self.food, self.money)
+        if self.cats_eat:
+            return 'В доме еды осталось {}, денег осталось {},  кошачей еды - {}, грязи - {}'.format(
+                self.food, self.money, self.cats_eat, self.dust)
+        else:
+            return 'В доме еды осталось {}, денег осталось {}'.format(self.food, self.money)
 
 
 
