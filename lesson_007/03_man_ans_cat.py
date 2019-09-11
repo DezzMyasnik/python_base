@@ -2,7 +2,7 @@
 
 from random import randint
 from termcolor import cprint
-from practice import Man, House
+#from practice import Man, House
 # Доработать практическую часть урока lesson_007/python_snippets/practice.py
 
 # Необходимо создать класс кота. У кота есть аттрибуты - сытость и дом (в котором он живет).
@@ -23,6 +23,107 @@ from practice import Man, House
 # Если степень сытости < 0, кот умирает.
 # Так же надо реализовать метод "действуй" для кота, в котором он принимает решение
 # что будет делать сегодня
+class Man:
+
+    def __init__(self, name):
+        self.name = name
+        self.fullness = 50
+        self.house = None
+
+    def __str__(self):
+        return 'Я - {}, сытость {}'.format(
+            self.name, self.fullness)
+
+    def eat(self):
+        if self.house.food >= 10:
+            cprint('{} поел'.format(self.name), color='yellow')
+            self.fullness += 10
+            self.house.food -= 10
+        else:
+            cprint('{} нет еды'.format(self.name), color='red')
+
+    def work(self):
+        cprint('{} сходил на работу'.format(self.name), color='blue')
+        self.house.money += 150
+        self.fullness -= 10
+
+    def watch_MTV(self):
+        cprint('{} смотрел MTV целый день'.format(self.name), color='green')
+        self.fullness -= 10
+
+    def shopping(self):
+        if self.house.money >= 50:
+            cprint('{} сходил в магазин за едой'.format(self.name), color='magenta')
+            self.house.money -= 50
+            self.house.food += 50
+        else:
+            cprint('{} деньги кончились!'.format(self.name), color='red')
+
+    def buy_cats_eat(self):
+        if self.house.money >= 50:
+            cprint('{} сходил в магазин за кошачей едой'.format(self.name), color='magenta')
+            self.house.cats_eat += 50
+            self.house.money -= 50
+        else:
+            cprint('{} деньги кончились!'.format(self.name), color='red')
+
+    def go_to_the_house(self, house):
+        self.house = house
+        self.fullness -= 10
+        cprint('{} Вьехал в дом'.format(self.name), color='cyan')
+
+    def get_cat(self, cat):
+        cat.house = self.house
+        cprint('{} подобрал кота {}'.format(self.name, cat.name))
+
+    def cleanup(self):
+        self.house.dust -= 100
+        self.fullness -= 20
+        cprint('{} убрался в доме'.format(self.name), color='blue')
+
+    def act(self):
+        if self.fullness <= 0:
+            cprint('{} умер...'.format(self.name), color='red')
+            return
+        dice = randint(1, 6)
+        if self.fullness < 20:
+            self.eat()
+            # иначе еда кончается и на этом действия человека замораживаются
+            if self.house.food < 10:
+                self.shopping()
+        elif self.house.food < 10:
+            self.shopping()
+        elif self.house.money < 50:
+            self.work()
+        elif self.house.cats_eat <= 20:
+            self.buy_cats_eat()
+        elif dice == 1:
+            self.work()
+        elif dice == 2:
+            self.eat()
+        elif dice == 3:
+            if self.house.dust >= 100:
+                if self.fullness <= 20:
+                    self.eat()
+                self.cleanup()
+        else:
+            self.watch_MTV()
+
+
+class House:
+
+    def __init__(self):
+        self.food = 50
+        self.money = 0
+
+    def __str__(self):
+        if self.cats_eat:
+            return 'В доме еды осталось {}, денег осталось {},  кошачей еды - {}, грязи - {}'.format(
+                self.food, self.money, self.cats_eat, self.dust)
+        else:
+            return 'В доме еды осталось {}, денег осталось {}'.format(self.food, self.money)
+
+
 class Cat:
 
     def __init__(self, name):
