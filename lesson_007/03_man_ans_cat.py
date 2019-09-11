@@ -3,8 +3,6 @@
 from random import randint
 from termcolor import cprint
 from practice import Man, House
-
-
 # Доработать практическую часть урока lesson_007/python_snippets/practice.py
 
 # Необходимо создать класс кота. У кота есть аттрибуты - сытость и дом (в котором он живет).
@@ -76,13 +74,11 @@ class Cat:
             self.cat_eat()
         else:
             self.cat_sleep()
-
-
 # Человеку и коту надо вместе прожить 365 дней.
 
 man = Man(name='Батхед')
 home = House()
-# cat = Cat(name='Барсик')
+#cat = Cat(name='Барсик')
 cats = [Cat(name='Барсик'), Cat(name='Борис'), Cat(name='Шерстяной')]
 man.go_to_the_house(house=home)
 for cat in cats:

@@ -25,10 +25,10 @@ class Water:
         self.content = "вода"
 
     def __str__(self):
-        return "Вода"
+        return "Вода"  # TODO зачем дубировать с content?
 
     def __add__(self, other):
-        if other.content == 'воздух':
+        if  other.content == 'воздух':  # TODO правильнее проверять тип other
             return Storm()
         elif other.content == 'огонь':
             return Par()
@@ -88,31 +88,23 @@ class Storm:
     def __str__(self):
         return "Шторм"
 
-
 class Par:
     def __str__(self):
         return "Пар"
 
-
 class Graz:
     def __str__(self):
         return "Грязь"
-
-
 class Dust:
     def __str__(self):
         return "Пыль"
 
-
 class Lawa:
     def __str__(self):
         return "Лава"
-
-
 class Flash:
     def __str__(self):
         return "Молния"
-
 
 print(Water(), "+", Air(), "=", Air() + Water())
 print(Water(), "+", Fire(), "=", Water() + Fire())
@@ -123,6 +115,9 @@ print(Air(), "+", Earth(), "=", Air() + Earth())
 print(Fire(), "+", Earth(), "=", Fire() + Earth())
 
 print(Earth(), "+", Earth(), "=", Earth() + Earth())
+
+
+
 
 # Усложненное задание (делать по желанию)
 # Добавить еще элемент в игру.
