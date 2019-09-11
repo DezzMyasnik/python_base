@@ -115,6 +115,8 @@ class House:
     def __init__(self):
         self.food = 50
         self.money = 0
+        self.cats_eat = 50
+        self.dust = 0
 
     def __str__(self):
         if self.cats_eat:
@@ -184,8 +186,8 @@ cats = [Cat(name='Барсик'), Cat(name='Борис'), Cat(name='Шерстя
 man.go_to_the_house(house=home)
 for cat in cats:
     man.get_cat(cat)
-home.cats_eat = 50  # TODO почему не в __init__
-home.dust = 0
+#home.cats_eat = 50
+#home.dust = 0
 for day in range(1, 366):
     print('================ день {} =================='.format(day))
     man.act()
