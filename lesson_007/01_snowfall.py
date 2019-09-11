@@ -61,7 +61,9 @@ flakes = get_flakes(count=20)  # создать список снежинок
 
 def get_fallen_flakes():
     i=0
-    for item in reversed(flakes):
+    for item in reversed(flakes):  # TODO удалять по значению долго,
+            # быстрее по индексу, но тогда нужно идти с конца списка чтобы оставался правильным
+            # либо можно просто заново создавать список flakes оставляя там нужные объекты.
         if not item.can_fall():
             flakes.remove(item)
             i += 1

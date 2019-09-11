@@ -2,7 +2,7 @@
 
 from random import randint
 from termcolor import cprint
-from practice import Man, House
+from practice import Man, House  # TODO перенесите эти классы сюда
 # Доработать практическую часть урока lesson_007/python_snippets/practice.py
 
 # Необходимо создать класс кота. У кота есть аттрибуты - сытость и дом (в котором он живет).

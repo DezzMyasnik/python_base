@@ -25,10 +25,10 @@ class Water:
         self.content = "вода"
 
     def __str__(self):
-        return "Вода"
+        return "Вода"  # TODO зачем дубировать с content?
 
     def __add__(self, other):
-        if  other.content == 'воздух':
+        if  other.content == 'воздух':  # TODO правильнее проверять тип other
             return Storm()
         elif other.content == 'огонь':
             return Par()
