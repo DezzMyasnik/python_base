@@ -61,9 +61,12 @@ flakes = get_flakes(count=20)  # создать список снежинок
 
 def get_fallen_flakes():
     i=0
-    for item in reversed(flakes):
-        if not item.can_fall():
-            flakes.remove(item)
+    #list_fl = enumerate(flakes)
+
+    for id in reversed(range(len(flakes))):
+        if not flakes[id].can_fall():
+            del flakes[id]
+            #flakes.remove(item)
             i += 1
     return  i
 
