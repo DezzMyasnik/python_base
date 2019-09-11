@@ -2,7 +2,6 @@
 
 from random import randint
 
-
 # Реализуем модель человека.
 # Человек может есть, работать, играть, ходить в магазин.
 # У человека есть степень сытости, немного еды и денег.
@@ -48,7 +47,7 @@ class Man:
             cprint('{} деньги кончились!'.format(self.name), color='red')
 
     def buy_cats_eat(self):
-        if self.house.money >=50:
+        if self.house.money >= 50:
             cprint('{} сходил в магазин за кошачей едой'.format(self.name), color='magenta')
             self.house.cats_eat += 50
             self.house.money -= 50
@@ -76,7 +75,7 @@ class Man:
         dice = randint(1, 6)
         if self.fullness < 20:
             self.eat()
-            #иначе еда кончается и на этом действия человека замораживаются
+            # иначе еда кончается и на этом действия человека замораживаются
             if self.house.food < 10:
                 self.shopping()
         elif self.house.food < 10:
@@ -112,16 +111,11 @@ class House:
             return 'В доме еды осталось {}, денег осталось {}'.format(self.food, self.money)
 
 
-
-
-
-
 citizens = [
     Man(name='Бивис'),
     Man(name='Батхед'),
     Man(name='Кенни'),
 ]
-
 
 """""
 my_sweet_home = House()
