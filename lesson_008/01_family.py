@@ -2,7 +2,7 @@
 
 from termcolor import cprint
 from random import randint
-coat = 0
+coat = 0  # TODO посмотрите на python_snippets/07_practice.py. Там счетчики хранятся в классах
 total_money = 0
 total_eat = 0
 ######################################################## Часть первая
@@ -60,7 +60,7 @@ class House:
 
 
 
-class Man:
+class Man:  # TODO Man - это мужчина, не лучшее название для базового класса
 
     def __init__(self,name):
         self.name = name
@@ -86,7 +86,7 @@ class Man:
 
 class Husband(Man):
 
-    def __str__(self):
+    def __str__(self):  # TODO зачем тогда?
         return super().__str__()
 
     def act(self):
@@ -107,9 +107,9 @@ class Husband(Man):
         elif dice == 3:
             self.gaming()
 
-    def eat(self):
+    def eat(self):  # TODO это логика базового класса
         global  total_eat
-        if self.house.food >= 30:
+        if self.house.food >= 30:  # min(30, self.house.food )
             cprint('{} поел'.format(self.name), color='yellow')
             self.fullness += 30
             self.house.food -= 30
@@ -138,14 +138,14 @@ class Wife(Man):
     def __str__(self):
         return super().__str__()
 
-    def go_to_the_house(self, house):
+    def go_to_the_house(self, house):  # TODO это метод базовго класса
         self.house = house
         self.fullness -= 10
         cprint('{} Вьехала в дом'.format(self.name), color='cyan')
 
 
     def act(self):
-        self.check_dust()
+        self.check_dust()  # TODO сначало лучше проверить на живость
         if self.fullness <= 0 or self.happyness <= 10:
             cprint('{} умерла...'.format(self.name), color='red')
             return
@@ -188,7 +188,7 @@ class Wife(Man):
         global coat
         if self.house.money > 360:
             cprint('{} сходила в магазин за шубой'.format(self.name), color='magenta')
-            self.happyness += 90
+            self.happyness += 90  # TODO 90?
             self.house.money -= 360
             self.fullness -= 10
             coat += 1
@@ -196,7 +196,7 @@ class Wife(Man):
     def clean_house(self):
         cprint('{} прибралась в доме'.format(self.name), color='magenta')
         self.fullness -= 10
-        if self.house.dust >= 100:
+        if self.house.dust >= 100:  # TODO просто min(100 и текущий уровень грязи)
 
             self.house.dust -= 100
         else:
@@ -306,22 +306,22 @@ class Child:
 # отправить на проверку учителем.
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-kolya = Child(name='Коля')
-murzik = Cat(name='Мурзик')
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    serge.act()
-    masha.act()
-    kolya.act()
-    murzik.act()
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(kolya, color='cyan')
-    cprint(murzik, color='cyan')
+# home = House()
+# serge = Husband(name='Сережа')
+# masha = Wife(name='Маша')
+# kolya = Child(name='Коля')
+# murzik = Cat(name='Мурзик')
+#
+# for day in range(365):
+#     cprint('================== День {} =================='.format(day), color='red')
+#     serge.act()
+#     masha.act()
+#     kolya.act()
+#     murzik.act()
+#     cprint(serge, color='cyan')
+#     cprint(masha, color='cyan')
+#     cprint(kolya, color='cyan')
+#     cprint(murzik, color='cyan')
 
 
 # Усложненное задание (делать по желанию)
