@@ -74,7 +74,6 @@ class Human:
             cprint('{} въехал в дом'.format(self.name), color='yellow')
 
     def eat(self):
-        global  total_eat
         if self.house.food >= 30:  # min(30, self.house.food )
             if type(self) is Wife:
                 cprint('{} поела'.format(self.name), color='yellow')
@@ -204,7 +203,7 @@ for day in range(365):
 cprint('Заработано денег - {}, куплено шуб - {}, съедено еды - {}'.format(
     Husband.total_money, Wife.coat, Human.total_eat
 ), color='red')
-
+#зачет!
 
 ######################################################## Часть вторая
 #
