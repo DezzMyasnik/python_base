@@ -2,9 +2,6 @@
 
 from termcolor import cprint
 from random import randint
-coat = 0  # TODO посмотрите на python_snippets/07_practice.py. Там счетчики хранятся в классах
-total_money = 0
-total_eat = 0
 ######################################################## Часть первая
 #
 # Создать модель жизни небольшой семьи.
@@ -49,7 +46,7 @@ class House:
     def __init__(self):
         self.money = 100
         self.food = 50
-        self.dust  = 0
+        self.dust = 0
 
     def __str__(self):
         return "В доме денег - {}, еды - {}, грязи - {}".format(self.money,self.food, self.dust)
@@ -60,8 +57,8 @@ class House:
 
 
 
-class Man:  # TODO Man - это мужчина, не лучшее название для базового класса
-
+class Human:
+    total_eat = 0
     def __init__(self,name):
         self.name = name
         self.happyness = 100
@@ -71,8 +68,23 @@ class Man:  # TODO Man - это мужчина, не лучшее названи
     def go_to_the_house(self, house):
         self.house = house
         self.fullness -= 10
-        cprint('{} Вьехал в дом'.format(self.name), color='cyan')
+        if type(self) is Wife:
+            cprint('{} въехала в дом '.format(self.name), color='yellow')
+        else:
+            cprint('{} въехал в дом'.format(self.name), color='yellow')
 
+    def eat(self):
+        global  total_eat
+        if self.house.food >= 30:  # min(30, self.house.food )
+            if type(self) is Wife:
+                cprint('{} поела'.format(self.name), color='yellow')
+            else:
+                cprint('{} поел'.format(self.name), color='yellow')
+            self.fullness += 30
+            self.house.food -= 30
+            Human.total_eat += 30
+        else:
+            cprint('{} нет еды'.format(self.name), color='red')
 
     def __str__(self):
         return '{}, сытость {}, {} счастья'.format(
@@ -83,11 +95,9 @@ class Man:  # TODO Man - это мужчина, не лучшее названи
             self.happyness -= 10
 
 
+class Husband(Human):
+    total_money = 0
 
-class Husband(Man):
-
-    def __str__(self):  # TODO зачем тогда?
-        return super().__str__()
 
     def act(self):
         self.check_dust()
@@ -107,15 +117,7 @@ class Husband(Man):
         elif dice == 3:
             self.gaming()
 
-    def eat(self):  # TODO это логика базового класса
-        global  total_eat
-        if self.house.food >= 30:  # min(30, self.house.food )
-            cprint('{} поел'.format(self.name), color='yellow')
-            self.fullness += 30
-            self.house.food -= 30
-            total_eat += 30
-        else:
-            cprint('{} нет еды'.format(self.name), color='red')
+
 
 
     def work(self):
@@ -123,7 +125,7 @@ class Husband(Man):
         cprint('{} сходил на работу'.format(self.name), color='blue')
         self.fullness -=10
         self.house.money +=150
-        total_money += 150
+        Husband.total_money += 150
 
     def gaming(self):
         cprint('{} поиграл в WOT'.format(self.name), color='blue')
@@ -132,23 +134,15 @@ class Husband(Man):
 
 
 
-class Wife(Man):
-
-
-    def __str__(self):
-        return super().__str__()
-
-    def go_to_the_house(self, house):  # TODO это метод базовго класса
-        self.house = house
-        self.fullness -= 10
-        cprint('{} Вьехала в дом'.format(self.name), color='cyan')
-
+class Wife(Human):
+    coat = 0
 
     def act(self):
-        self.check_dust()  # TODO сначало лучше проверить на живость
+
         if self.fullness <= 0 or self.happyness <= 10:
             cprint('{} умерла...'.format(self.name), color='red')
             return
+        self.check_dust()
         dice = randint(1, 4)
 
         if self.house.food <= 30:
@@ -165,16 +159,6 @@ class Wife(Man):
         elif dice == 4:
             self.clean_house()
 
-    def eat(self):
-        global total_eat
-        if self.house.food >= 30:
-            cprint('{} поела'.format(self.name), color='yellow')
-            self.fullness += 30
-            self.house.food -= 30
-            total_eat += 30
-        else:
-            cprint('{} нет еды'.format(self.name), color='red')
-
     def shopping(self):
         self.fullness -= 10
         if self.house.money >= 50:
@@ -185,22 +169,20 @@ class Wife(Man):
             cprint('{} деньги кончились!'.format(self.name), color='red')
 
     def buy_fur_coat(self):
-        global coat
+
         if self.house.money > 360:
             cprint('{} сходила в магазин за шубой'.format(self.name), color='magenta')
-            self.happyness += 90  # TODO 90?
+            self.happyness += 60
             self.house.money -= 360
             self.fullness -= 10
-            coat += 1
+            Wife.coat += 1
+
 
     def clean_house(self):
         cprint('{} прибралась в доме'.format(self.name), color='magenta')
         self.fullness -= 10
-        if self.house.dust >= 100:  # TODO просто min(100 и текущий уровень грязи)
+        self.house.dust = self.house.dust - min(100, self.house.dust)
 
-            self.house.dust -= 100
-        else:
-            self.house.dust = 0
 
 
 home = House()
@@ -220,7 +202,7 @@ for day in range(365):
     cprint(home, color='cyan')
 
 cprint('Заработано денег - {}, куплено шуб - {}, съедено еды - {}'.format(
-    total_money, coat, total_eat
+    Husband.total_money, Wife.coat, Human.total_eat
 ), color='red')
 
 
