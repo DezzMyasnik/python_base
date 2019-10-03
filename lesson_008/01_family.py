@@ -90,7 +90,7 @@ class Human:
             self.name, self.fullness, self.happyness)
 
     def check_dust(self):
-        if self.house.dust >=90:
+        if self.house.dust >= 90:
             self.happyness -= 10
 
 
@@ -183,7 +183,7 @@ class Wife(Human):
         self.house.dust = self.house.dust - min(100, self.house.dust)
 
 
-
+""""
 home = House()
 serge = Husband(name='Сережа')
 masha = Wife(name='Маша')
@@ -203,6 +203,7 @@ for day in range(365):
 cprint('Заработано денег - {}, куплено шуб - {}, съедено еды - {}'.format(
     Husband.total_money, Wife.coat, Human.total_eat
 ), color='red')
+"""
 #зачет!
 
 ######################################################## Часть вторая
@@ -232,8 +233,8 @@ cprint('Заработано денег - {}, куплено шуб - {}, съе
 
 class Cat:
 
-    def __init__(self):
-        pass
+    def __init__(self,name):
+        self.name = name
 
     def act(self):
         pass
@@ -259,22 +260,36 @@ class Cat:
 # отличия от взрослых - кушает максимум 10 единиц еды,
 # степень счастья  - не меняется, всегда ==100 ;)
 
-class Child:
+class Child(Human):
 
-    def __init__(self):
-        pass
+    def __init__(self,name):
+        self.happyness = 100
+        super().__init__(name=name)
 
     def __str__(self):
         return super().__str__()
 
     def act(self):
-        pass
+        if self.fullness <= 0 or self.happyness <= 10:
+            cprint('{} умер...'.format(self.name), color='red')
+            return
+        dice = randint(1,2)
+        if self.fullness <= 10:
+            self.eat()
 
+        elif dice == 1:
+            self.eat()
+        elif dice == 2:
+            self.sleep()
     def eat(self):
-        pass
+
+        if self.house.food>=10:
+            self.fullness += 10
+            cprint('{} поел...'.format(self.name), color='magenta')
 
     def sleep(self):
-        pass
+        self.fullness -= 10
+        cprint('{} поспал'.format(self.name), color='magenta')
 
 
 # TODO после реализации второй части - отдать на проверку учителем две ветки
@@ -287,24 +302,29 @@ class Child:
 # отправить на проверку учителем.
 
 
-# home = House()
-# serge = Husband(name='Сережа')
-# masha = Wife(name='Маша')
-# kolya = Child(name='Коля')
-# murzik = Cat(name='Мурзик')
-#
-# for day in range(365):
-#     cprint('================== День {} =================='.format(day), color='red')
-#     serge.act()
-#     masha.act()
-#     kolya.act()
-#     murzik.act()
-#     cprint(serge, color='cyan')
-#     cprint(masha, color='cyan')
-#     cprint(kolya, color='cyan')
-#     cprint(murzik, color='cyan')
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+kolya = Child(name='Коля')
+murzik = Cat(name='Мурзик')
+serge.go_to_the_house(home)
+masha.go_to_the_house(home)
+kolya.go_to_the_house(home)
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    home.add_dust()
+    serge.act()
+    masha.act()
+    kolya.act()
+    murzik.act()
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(kolya, color='cyan')
+    cprint(murzik, color='cyan')
 
-
+cprint('Заработано денег - {}, куплено шуб - {}, съедено еды - {}'.format(
+    Husband.total_money, Wife.coat, Human.total_eat
+), color='red')
 # Усложненное задание (делать по желанию)
 #
 # Сделать из семьи любителей котов - пусть котов будет 3, или даже 5-10.
