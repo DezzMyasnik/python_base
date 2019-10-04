@@ -263,14 +263,14 @@ class Cat:
 class Child(Human):
 
     def __init__(self,name):
-        self.happyness = 100
+        self.happyness = 100  # TODO зачем? в super().__init__ тоже самое
         super().__init__(name=name)
 
-    def __str__(self):
+    def __str__(self):  # TODO зачем преопределять раз вы ничего не добавляете
         return super().__str__()
 
     def act(self):
-        if self.fullness <= 0 or self.happyness <= 10:
+        if self.fullness <= 0 or self.happyness <= 10:  # TODO степень счастья  - не меняется, всегда ==100
             cprint('{} умер...'.format(self.name), color='red')
             return
         dice = randint(1,2)
@@ -291,7 +291,6 @@ class Child(Human):
         self.fullness -= 10
         cprint('{} поспал'.format(self.name), color='magenta')
 
-
 # TODO после реализации второй части - отдать на проверку учителем две ветки
 
 
@@ -306,7 +305,7 @@ home = House()
 serge = Husband(name='Сережа')
 masha = Wife(name='Маша')
 kolya = Child(name='Коля')
-murzik = Cat(name='Мурзик')
+murzik = Cat(name='Мурзик')  # TODO кота пока быть не должно на мастере
 serge.go_to_the_house(home)
 masha.go_to_the_house(home)
 kolya.go_to_the_house(home)
