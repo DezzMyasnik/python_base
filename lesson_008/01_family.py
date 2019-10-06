@@ -289,7 +289,7 @@ class Cat:
             self.sleep()
 
     def eat(self):
-        if self.house.cats_eat <= 0:
+        if self.house.cats_eat < 10:
             self.fullness -= 10
             cprint('В доме нет еды, {} не поел'.format(self.name), color='red')
 
@@ -297,7 +297,7 @@ class Cat:
 
         else:
             self.fullness += 20
-            self.house.cats_eat -= 10  # TODO может стать отрицательной
+            self.house.cats_eat -= 10
             cprint('Котэ {} поел'.format(self.name), color='yellow')
 
     def sleep(self):
