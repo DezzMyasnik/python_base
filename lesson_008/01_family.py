@@ -281,7 +281,7 @@ class Child(Human):
     def eat(self):
 
         if self.house.food>=10:
-            self.fullness += 10
+            self.fullness += 10  # TODO а почему еда не убывает и статистика еды не меняется?
             cprint('{} поел...'.format(self.name), color='magenta')
 
     def sleep(self):
