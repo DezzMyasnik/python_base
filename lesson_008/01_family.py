@@ -365,10 +365,6 @@ cprint('Заработано денег - {}, куплено шуб - {}, съе
 
 class Child(Human):
 
-
-
-
-
     def act(self):
         if self.fullness <= 0 :
             cprint('{} умер...'.format(self.name), color='red')
@@ -391,8 +387,6 @@ class Child(Human):
     def sleep(self):
         self.fullness -= 10
         cprint('{} поспал'.format(self.name), color='magenta')
-
-# TODO после реализации второй части - отдать на проверку учителем две ветки
 
 
 ######################################################## Часть третья
@@ -448,3 +442,4 @@ cprint('Заработано денег - {}, куплено шуб - {}, съе
 #           max_cats = life.experiment(salary)
 #           print(f'При зарплате {salary} максимально можно прокормить {max_cats} котов')
 
+#зачет!
