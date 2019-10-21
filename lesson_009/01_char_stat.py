@@ -32,7 +32,7 @@ def sortByAlphabet(inputStr):
 
     return inputStr[0]
 
-def sortByCount(inputStr):
+def sortByCount(inputStr):# TODO используйте единообразыный способ названия, который соотвествует pep8
 
     return inputStr[1]
 
@@ -40,7 +40,7 @@ class CharStat(metaclass=ABCMeta):
     analize_count = 1
     def __init__(self, file_name):
         self.file_name = file_name
-        self.stat = {}
+        self.stat = {}  # TODO используйте defaultdict from collection
 
     def unzip(self):
         zfile = zipfile.ZipFile(self.file_name, 'r')
@@ -57,7 +57,7 @@ class CharStat(metaclass=ABCMeta):
                 self._collect(line)
                #self._collect_for_line(line=line[:-1])
 
-    def _collect_for_line(self, line):
+    def _collect_for_line(self, line):  # TODO если не используется то удалите
         for char in line:
             if self.sequence in self.stat:
                 if char in self.stat[self.sequence] :
@@ -97,7 +97,8 @@ class Sort_1(CharStat):
     def _print_list(self):
 
         total = 0
-        for item in sorted(list(self.stat.items()), key=sortByAlphabet, reverse=True):
+        for item in sorted(list(self.stat.items()), key=sortByAlphabet, reverse=True):  # TODO посмотрие на ваши
+            # _print_list методы. В них много общего что можно вынести в базовый класс, а различающееся переопределять в потомках
             total += item[1]
             print('+   {0}     +  {1:7d} +'.format(item[0], item[1]))
 
@@ -123,7 +124,7 @@ class Sort_3(CharStat):
         for item in sorted(list(self.stat.items()), key=sortByCount, reverse=False):
             total += item[1]
             print('+   {0}     +  {1:7d} +'.format(item[0], item[1]))
-        return total
+        return total  # TODO не смешиваете функциональность - метод либо печататет, либо формирует total
 
 
 class Sort_4(CharStat):

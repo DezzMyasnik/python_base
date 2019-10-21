@@ -27,7 +27,7 @@ class Parser(metaclass=ABCMeta):
     def __init__(self, filename):
         self.name = filename
         self.log = []
-        self.stata = {}
+        self.stata = {} # TODO используйте defaultdict from collection
 
     def read_log(self):
         with open(self.name, 'r', encoding='cp1251') as file:
@@ -41,7 +41,7 @@ class Parser(metaclass=ABCMeta):
         pass
 
 
-    def log_parese(self, line):
+    def log_parese(self, line):  # TODO parese?
         line = line.rstrip('\n')
         splitted = line.rsplit('] ')
         splitted[0] = splitted[0].lstrip('[')
@@ -63,7 +63,7 @@ class Parser(metaclass=ABCMeta):
 class MinutPareser(Parser):
 
     def _get_data_str(self,data):
-        data = data[:data.find('.', 0, len(data)) - 3]
+        data = data[:data.find('.', 0, len(data)) - 3]  # TODO зачем нужно  data = data?
         return data
 
 class HourPareser(Parser):
