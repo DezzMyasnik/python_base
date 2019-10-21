@@ -26,21 +26,21 @@
 import zipfile
 from pprint import pprint
 from abc import ABCMeta, abstractmethod
+from collections import defaultdict
 
+def sortByAlphabet(input_str):
 
-def sortByAlphabet(inputStr):
+    return input_str[0]
 
-    return inputStr[0]
+def sortByCount(input_str):
 
-def sortByCount(inputStr):# TODO используйте единообразыный способ названия, который соотвествует pep8
-
-    return inputStr[1]
+    return input_str[1]
 
 class CharStat(metaclass=ABCMeta):
-    analize_count = 1
+
     def __init__(self, file_name):
         self.file_name = file_name
-        self.stat = {}  # TODO используйте defaultdict from collection
+        self.stat = defaultdict(int)
 
     def unzip(self):
         zfile = zipfile.ZipFile(self.file_name, 'r')
@@ -51,40 +51,32 @@ class CharStat(metaclass=ABCMeta):
     def collect(self):
         if self.file_name.endswith('.zip'):
             self.unzip()
-        self.sequence = ' ' * self.analize_count
+
         with open(self.file_name, 'r', encoding='cp1251') as file:
             for line in file:
                 self._collect(line)
-               #self._collect_for_line(line=line[:-1])
 
-    def _collect_for_line(self, line):  # TODO если не используется то удалите
-        for char in line:
-            if self.sequence in self.stat:
-                if char in self.stat[self.sequence] :
-                    self.stat[self.sequence][char] += 1
-                else:
-                    self.stat[self.sequence][char] = 1
-            else:
-                self.stat[self.sequence] = {char: 1}
-            self.sequence = self.sequence[1:] + char
+
+
 
     def _collect(self, line):
         for char in line:
-            if char in self.stat:
-
+            if char.isalpha():
                 self.stat[char] += 1
-            else:
-                if char.isalpha():
-                    self.stat[char] = 1
 
     def prepare(self):
         print('+---------+----------+')
         print('|  буква  |  частота |')
         print('+---------+----------+')
-        total = self._print_list()
+        args_ = self._print_list()
+        i =0
+        for item in sorted(list(self.stat.items()), key=args_[0], reverse=args_[1]):
+            i+=item[1]
+
+            print('+   {0}     +  {1:7d} +'.format(item[0], item[1]))
         print('+---------+----------+')
 
-        print('+   {0} +  {1:7d} +'.format("Итого", total))
+        print('+   {0} +  {1:7d} +'.format("Итого",i))
         print('+---------+----------+')
 
     @abstractmethod
@@ -96,46 +88,30 @@ class Sort_1(CharStat):
 
     def _print_list(self):
 
-        total = 0
-        for item in sorted(list(self.stat.items()), key=sortByAlphabet, reverse=True):  # TODO посмотрие на ваши
-            # _print_list методы. В них много общего что можно вынести в базовый класс, а различающееся переопределять в потомках
-            total += item[1]
-            print('+   {0}     +  {1:7d} +'.format(item[0], item[1]))
+        return (sortByAlphabet, True,)
 
-        return total
+
 
 
 class Sort_2(CharStat):
 
     def _print_list(self):
+        return (sortByAlphabet, False)
 
-        total = 0
-        for item in sorted(list(self.stat.items()), key=sortByAlphabet, reverse=False):
-            total += item[1]
-            print('+   {0}     +  {1:7d} +'.format(item[0], item[1]))
 
-        return total
 
 class Sort_3(CharStat):
 
     def _print_list(self):
+        return (sortByCount, False, )
 
-        total = 0
-        for item in sorted(list(self.stat.items()), key=sortByCount, reverse=False):
-            total += item[1]
-            print('+   {0}     +  {1:7d} +'.format(item[0], item[1]))
-        return total  # TODO не смешиваете функциональность - метод либо печататет, либо формирует total
 
 
 class Sort_4(CharStat):
 
     def _print_list(self):
+        return (sortByCount, True,)
 
-        total = 0
-        for item in sorted(list(self.stat.items()), key=sortByCount, reverse=True):
-            total += item[1]
-            print('+   {0}     +  {1:7d} +'.format(item[0], item[1]))
-        return total
 
 
 print('Упорядочивание по частоте - по убыванию')
