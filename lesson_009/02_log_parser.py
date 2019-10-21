@@ -20,19 +20,19 @@
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
 
 from abc import ABCMeta, abstractmethod
-
+from collections import defaultdict
 
 class Parser(metaclass=ABCMeta):
 
     def __init__(self, filename):
         self.name = filename
         self.log = []
-        self.stata = {} # TODO используйте defaultdict from collection
+        self.stata = defaultdict(int)
 
     def read_log(self):
         with open(self.name, 'r', encoding='cp1251') as file:
             for line in file:
-                self.log_parese(line)
+                self.log_parse(line)
 
             self.nok_count()
 
@@ -41,7 +41,7 @@ class Parser(metaclass=ABCMeta):
         pass
 
 
-    def log_parese(self, line):  # TODO parese?
+    def log_parse(self, line):  #
         line = line.rstrip('\n')
         splitted = line.rsplit('] ')
         splitted[0] = splitted[0].lstrip('[')
@@ -52,10 +52,7 @@ class Parser(metaclass=ABCMeta):
     def nok_count(self):
         for item in self.log:
             if item[0] == 'NOK':
-                if item[1] in self.stata:
-                    self.stata[item[1]] += 1
-                else:
-                    self.stata[item[1]] = 1
+                self.stata[item[1]] += 1
 
     def __str__(self):
         return str(self.stata)
@@ -63,33 +60,33 @@ class Parser(metaclass=ABCMeta):
 class MinutPareser(Parser):
 
     def _get_data_str(self,data):
-        data = data[:data.find('.', 0, len(data)) - 3]  # TODO зачем нужно  data = data?
-        return data
+
+        return data[:data.find('.', 0, len(data)) - 3]
 
 class HourPareser(Parser):
 
     def _get_data_str(self,data):
-        data = data[:data.find('.', 0, len(data)) - 6]
-        return data
+
+        return data[:data.find('.', 0, len(data)) - 6]
 
 class DayPareser(Parser):
 
     def _get_data_str(self,data):
-        data = data[:data.find('.', 0, len(data)) - 9]
-        return data
+
+        return data[:data.find('.', 0, len(data)) - 9]
 
 class MounthParser(Parser):
 
     def _get_data_str(self,data):
-        data = data[:data.find('.', 0, len(data)) - 12]
-        return data
+
+        return data[:data.find('.', 0, len(data)) - 12]
 
 
-class YaerParser(Parser):
+class YearParser(Parser):
 
     def _get_data_str(self, data):
-        data = data[:data.find('.', 0, len(data)) - 15]
-        return data
+
+        return data[:data.find('.', 0, len(data)) - 15]
 
 
 out_list =[]
@@ -105,7 +102,7 @@ out_list.extend(test.stata.items())
 test = MounthParser('events.txt')
 test.read_log()
 out_list.extend(test.stata.items())
-test = YaerParser('events.txt')
+test = YearParser('events.txt')
 test.read_log()
 out_list.extend(test.stata.items())
 
@@ -114,6 +111,13 @@ with open('events_res.txt', 'w') as file:
     for item in out_list:
         str_out = '[{}] {}\n'.format(item[0], item[1])
         file.write(str_out)
+
+
+
+
+
+
+
 
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
