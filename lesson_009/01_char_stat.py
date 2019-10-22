@@ -56,9 +56,6 @@ class CharStat(metaclass=ABCMeta):
             for line in file:
                 self._collect(line)
 
-
-
-
     def _collect(self, line):
         for char in line:
             if char.isalpha():
@@ -135,6 +132,7 @@ chatterer = Sort_1(file_name='voyna-i-mir.txt.zip')
 chatterer.collect()
 chatterer.prepare()
 
+#зачет!
 
 
 
