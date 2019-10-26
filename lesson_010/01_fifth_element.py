@@ -5,10 +5,16 @@
 BRUCE_WILLIS = 42
 
 input_data = input('Если хочешь что-нибудь сделать, сделай это сам: ')
-leeloo = int(input_data[4])
-result = BRUCE_WILLIS * leeloo
-print(f"- Leeloo Dallas! Multi-pass № {result}!")
-
+try:
+    leeloo = int(input_data[4])
+    result = BRUCE_WILLIS * leeloo
+    print(f"- Leeloo Dallas! Multi-pass № {result}!")
+except IndexError:
+    print('введена слишком короткая строка')
+except ValueError:
+    print("4 элемент строки не является числом")
+except:
+    print('что то все же не так. Надо разбираться!')
 # Ообернуть код и обработать исключительные ситуации для произвольных входных параметров
 # - ValueError - невозможно преобразовать к числу
 # - IndexError - выход за границы списка
