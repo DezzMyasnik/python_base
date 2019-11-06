@@ -83,3 +83,4 @@ while i <= ENLIGHTENMENT_CARMA_LEVEL:
     print(i)
 
 # https://goo.gl/JnsDqu
+#зачет!

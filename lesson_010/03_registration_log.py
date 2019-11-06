@@ -54,11 +54,11 @@ class Parser:
     def line_process(self, line):
         rout = line.split(' ')
 
-        if len(rout) is not 3:
+        if len(rout) != 3:
             raise ValueError('В строке менше трех элементов', line)
         if not rout[0].isalpha():
             raise NotNameError('В имени не только буквы', line)
-        if '@' not in rout[1]:
+        if '@' not in rout[1]:  # TODO поле емейл содержит @ и .
             raise NotEmailError('Не соотвесвтует формату почты', line)
         if rout[2].isdigit():
 
@@ -77,5 +77,5 @@ class Parser:
             file.writelines(line)
 
 
-line__ = Parser('registrations.txt')
+line__ = Parser('registrations.txt')  # TODO  что за название с __?
 line__.read_log()
