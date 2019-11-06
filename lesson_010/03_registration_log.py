@@ -25,11 +25,14 @@
 
 from collections import defaultdict
 
+
 class NotNameError(BaseException):
     pass
 
+
 class NotEmailError(BaseException):
     pass
+
 
 class Parser:
 
@@ -37,7 +40,6 @@ class Parser:
         self.name = filename
         self.log = []
         self.stata = defaultdict(int)
-
 
     def read_log(self):
         with open(self.name, 'r', encoding='utf-8') as file:
@@ -53,13 +55,10 @@ class Parser:
         rout = line.split(' ')
 
         if len(rout) is not 3:
-
             raise ValueError('В строке менше трех элементов', line)
         if not rout[0].isalpha():
-
             raise NotNameError('В имени не только буквы', line)
         if '@' not in rout[1]:
-
             raise NotEmailError('Не соотвесвтует формату почты', line)
         if rout[2].isdigit():
 
@@ -68,7 +67,6 @@ class Parser:
 
         else:
             raise ValueError('Поле возраста не число', line)
-
 
     def write_log(self, line):
         with open('registrations_good.log', 'a', encoding='utf-8') as file:
@@ -79,7 +77,5 @@ class Parser:
             file.writelines(line)
 
 
-
 line__ = Parser('registrations.txt')
 line__.read_log()
-

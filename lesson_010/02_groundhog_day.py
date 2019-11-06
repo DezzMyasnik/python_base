@@ -48,7 +48,6 @@ class DrunkError(Exception):
 
 
 def one_day():
-
     try:
         ob = random.choice([IamGodError('Я есть божество'),
                             DrunkError("Напился"),
