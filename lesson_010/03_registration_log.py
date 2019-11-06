@@ -79,3 +79,4 @@ class Parser:
 
 log = Parser('registrations.txt')
 log.read_log()
+#зачет!
