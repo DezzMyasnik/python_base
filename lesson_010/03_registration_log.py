@@ -22,4 +22,64 @@
 # - поле возраст НЕ является числом от 10 до 99: ValueError
 # Вызов метода обернуть в try-except.
 
-# TODO здесь ваш код
+
+from collections import defaultdict
+
+class NotNameError(BaseException):
+    pass
+
+class NotEmailError(BaseException):
+    pass
+
+class Parser:
+
+    def __init__(self, filename):
+        self.name = filename
+        self.log = []
+        self.stata = defaultdict(int)
+
+
+    def read_log(self):
+        with open(self.name, 'r', encoding='utf-8') as file:
+            for line in file:
+                try:
+                    self.line_process(line[:-1])
+                    self.write_log(line)
+                except (ValueError, NotNameError, NotEmailError) as exc:
+                    print(f"Ошибка типа: {exc}")
+                    self.write_erorr_log(f"{exc} \n")
+
+    def line_process(self, line):
+        rout = line.split(' ')
+
+        if len(rout) is not 3:
+
+            raise ValueError('В строке менше трех элементов', line)
+        if not rout[0].isalpha():
+
+            raise NotNameError('В имени не только буквы', line)
+        if '@' not in rout[1]:
+
+            raise NotEmailError('Не соотвесвтует формату почты', line)
+        if rout[2].isdigit():
+
+            if 10 > int(rout[2]) or int(rout[2]) > 99:
+                raise ValueError("Не в диапазоне от 10 до 99", line)
+
+        else:
+            raise ValueError('Поле возраста не число', line)
+
+
+    def write_log(self, line):
+        with open('registrations_good.log', 'a', encoding='utf-8') as file:
+            file.writelines(line)
+
+    def write_erorr_log(self, line):
+        with open(' registrations_bad.log', 'a', encoding='utf-8') as file:
+            file.writelines(line)
+
+
+
+line__ = Parser('registrations.txt')
+line__.read_log()
+
