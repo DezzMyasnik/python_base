@@ -22,11 +22,37 @@ def get_prime_numbers(n):
 
 
 class PrimeNumbers:
-    pass
-    # TODO здесь ваш код
+
+    def __init__(self, n):
+        self.number = get_prime_numbers(n)
 
 
-prime_number_iterator = PrimeNumbers(n=10000)
+    def __iter__(self):
+
+        self.i = 0
+        # возвращаем ссылку на себя - я буду итератором!
+        return self
+
+
+    def __next__(self):
+
+        try:
+            item = self.number[self.i]
+            self.i += 1
+            return item
+
+
+        except IndexError as exc:
+
+            raise StopIteration()
+
+
+
+
+
+
+
+prime_number_iterator = PrimeNumbers(n=100000)
 for number in prime_number_iterator:
     print(number)
 
