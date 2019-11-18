@@ -6,7 +6,7 @@
 
 def get_prime_numbers(n):
     prime_numbers = []
-    for number in range(2, n+1):
+    for number in range(2, n + 1):
         for prime in prime_numbers:
             if number % prime == 0:
                 break
@@ -14,13 +14,14 @@ def get_prime_numbers(n):
             prime_numbers.append(number)
     return prime_numbers
 
+
 # Часть 1
 # На основе алгоритма get_prime_numbers создать класс итерируемых обьектов,
 # который выдает последовательность простых чисел до n
 #
 # Распечатать все простые числа до 10000 в столбик
 
-
+'''
 class PrimeNumbers:
 
     def __init__(self, n):
@@ -58,20 +59,53 @@ for number in prime_number_iterator:
 
 
 # TODO после подтверждения части 1 преподователем, можно делать
+'''
+
+
 # Часть 2
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
 # Распечатать все простые числа до 10000 в столбик
 
 
 def prime_numbers_generator(n):
-    pass
-    # TODO здесь ваш код
+    prime_numbers = []
+    for number in range(2, n + 1):
+        for prime in prime_numbers:
+            if number % prime == 0:
+                break
+        else:
+            yield number
+            prime_numbers.append(number)
 
 
-for number in prime_numbers_generator(n=10000):
-    print(number)
+def filter_one(n):
+    dlina_chisla = len(str(n))
 
+    if len(str(n)) % 2 == 0:
+        second = str(n)[int((dlina_chisla / 2)):]
+    else:
+        second = str(n)[int((dlina_chisla / 2)) + 1:]
+    first = str(n)[0:int(dlina_chisla / 2)]
+    first_part, second_part = 0, 0
+    for noun in first:
+        first_part += int(noun)
+    for noun in second:
+        second_part += int(noun)
+    if first_part is second_part:
+          return True
 
+def polyndrome(n):
+    strdd = str(n)[::-1];
+    if str(n) == strdd:
+        return True
+
+for number in prime_numbers_generator(n=100000):
+    # filter_one(number)
+    #if filter_one(number):
+    #    print(f"{number} {filter_one(number)}")
+    #print('Полиндромы')
+    if polyndrome(number):
+        print(f"{number} {polyndrome(number)}")
 # Часть 3
 # Написать несколько функций-фильтров, которые выдает True, если число:
 # 1) "счастливое" в обыденном пониманиии - сумма первых цифр равна сумме последних
