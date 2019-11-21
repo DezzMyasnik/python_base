@@ -9,26 +9,25 @@
 
 
 def log_errors(func):
-        def surrogate(*args, **kwargs):
-            try:
-                result = func(*args, **kwargs)
+    def surrogate(*args, **kwargs):
+        try:
+            result = func(*args, **kwargs)
 
-            except (ValueError, BaseException) as exc:
-                with open('function_errors.log', 'a', encoding='utf-8') as file:
+        except (ValueError, BaseException) as exc:
+            with open("function_errors.log", 'a', encoding='utf-8') as file:
 
-                    file.writelines (f'{func.__name__} {args} {kwargs} {type(exc)} {exc} \n')
+                file.writelines(f'{func.__name__} {args} {kwargs} {type(exc)} {exc} \n')
 
-        return surrogate
-
+    return surrogate
 
 
 # Проверить работу на следующих функциях
-@log_errors
+@log_errors("function_errors.log")
 def perky(param):
     return param / 0
 
 
-@log_errors
+@log_errors("function_errors.log")
 def check_line(line):
     name, email, age = line.split(' ')
     if not name.isalpha():
@@ -54,11 +53,9 @@ for line in lines:
         print(f'Invalid format: {exc}')
 perky(param=42)
 
-
 # Усложненное задание (делать по желанию).
 # Написать декоратор с параметром - именем файла
 #
 # @log_errors('function_errors.log')
 # def func():
 #     pass
-
