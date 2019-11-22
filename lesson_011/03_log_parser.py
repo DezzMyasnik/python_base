@@ -80,3 +80,4 @@ grouped_events = MinutPareser('events.txt')
 # test.read_log()
 for group_time, event_count in grouped_events:
     print(f'[{group_time}] {event_count}')
+#зачет!

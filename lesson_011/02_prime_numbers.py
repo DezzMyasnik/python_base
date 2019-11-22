@@ -21,7 +21,8 @@ def get_prime_numbers(n):
 #
 # Распечатать все простые числа до 10000 в столбик
 
-'''
+# TODO жду работающую часть 1
+''' 
 class PrimeNumbers:
 
     def __init__(self, n):

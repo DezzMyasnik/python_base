@@ -8,7 +8,8 @@
 # Лог файл открывать каждый раз при ошибке в режиме 'a'
 
 
-def log_errors(func):
+def log_errors(func):  # TODO TypeError: 'str' object is not callable,
+    # для усложненого задания этого не достаточно, не работает
     def surrogate(*args, **kwargs):
         try:
             result = func(*args, **kwargs)
