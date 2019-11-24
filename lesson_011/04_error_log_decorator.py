@@ -7,28 +7,28 @@
 # Формат лога: <имя функции> <параметры вызова> <тип ошибки> <текст ошибки>
 # Лог файл открывать каждый раз при ошибке в режиме 'a'
 
+def log(filename):
+    def log_errors(func):
+        # для усложненого задания этого не достаточно, не работает
+        def surrogate(*args, **kwargs):
+            try:
+                result = func(*args, **kwargs)
 
-def log_errors(func):  # TODO TypeError: 'str' object is not callable,
-    # для усложненого задания этого не достаточно, не работает
-    def surrogate(*args, **kwargs):
-        try:
-            result = func(*args, **kwargs)
+            except (ValueError, BaseException) as exc:
+                with open(filename, 'a', encoding='utf-8') as file:
 
-        except (ValueError, BaseException) as exc:
-            with open("function_errors.log", 'a', encoding='utf-8') as file:
+                    file.writelines(f'{func.__name__} {args} {kwargs} {type(exc)} {exc} \n')
 
-                file.writelines(f'{func.__name__} {args} {kwargs} {type(exc)} {exc} \n')
-
-    return surrogate
-
+        return surrogate
+    return log_errors
 
 # Проверить работу на следующих функциях
-@log_errors("function_errors.log")
+@log("function_errors.log")
 def perky(param):
     return param / 0
 
 
-@log_errors("function_errors.log")
+@log("function_errors.log")
 def check_line(line):
     name, email, age = line.split(' ')
     if not name.isalpha():
