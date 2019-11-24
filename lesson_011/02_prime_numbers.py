@@ -21,8 +21,7 @@ def get_prime_numbers(n):
 #
 # Распечатать все простые числа до 10000 в столбик
 
-# TODO жду работающую часть 1
-''' 
+
 class PrimeNumbers:
 
     def __init__(self, n):
@@ -102,8 +101,8 @@ def polyndrome(n):
 
 for number in prime_numbers_generator(n=100000):
     # filter_one(number)
-    #if filter_one(number):
-    #    print(f"{number} {filter_one(number)}")
+    if filter_one(number):
+       print(f"{number} {filter_one(number)}")
     #print('Полиндромы')
     if polyndrome(number):
         print(f"{number} {polyndrome(number)}")
@@ -122,3 +121,4 @@ for number in prime_numbers_generator(n=100000):
 # простых счастливых палиндромных чисел и так далее. Придумать не менее 2х способов.
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
+'''
