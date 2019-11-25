@@ -12,7 +12,7 @@ def log(filename):
         # для усложненого задания этого не достаточно, не работает
         def surrogate(*args, **kwargs):
             try:
-                result = func(*args, **kwargs)
+                return func(*args, **kwargs)
 
             except (ValueError, BaseException) as exc:
                 with open(filename, 'a', encoding='utf-8') as file:
@@ -60,3 +60,4 @@ perky(param=42)
 # @log_errors('function_errors.log')
 # def func():
 #     pass
+#зачет!
