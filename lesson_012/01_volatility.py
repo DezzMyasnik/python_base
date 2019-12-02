@@ -73,4 +73,65 @@
 #     def run(self):
 #         <обработка данных>
 
-# TODO написать код в однопоточном/однопроцессорном стиле
+
+import os
+from collections import defaultdict, OrderedDict
+
+class ProcessTiker:
+
+    def __init__(self,dir_name,*argds,**kwargs):
+        self.full_dir_name = f'{os.getcwd()}\\{dir}'
+        self.ticker = defaultdict(float)
+
+    def proceess_ticker_list(self, list_of_line):
+        list_of_line.pop(0)
+        minimum = float(min(list_of_line, key=lambda element: float(element[2]))[2])
+        maximum = float(max(list_of_line, key=lambda element: float(element[2]))[2])
+        average_price = (maximum + minimum) / 2
+        volatility = ((maximum - minimum) / average_price) * 100
+        tickername = list_of_line[0][0]
+        self.ticker[tickername] += volatility
+
+
+
+    def report_read(self,file_name):
+        tiker_list = []
+        with open(file_name, 'r', encoding='utf-8') as f_file:
+            for line in f_file:
+                tiker_list.append(line[:-1].split(','))
+
+            self.proceess_ticker_list(tiker_list)
+
+
+    def run(self):
+        for file in os.listdir(self.full_dir_name):
+            file_name = f'{self.full_dir_name}\\{file}'
+            self.report_read(file_name)
+
+        ticker_forsort = list(self.ticker.items())
+        ticker_forsort.sort(key=lambda i: -i[1])
+        print('Маскимальная волатильнсть')
+        [print(f'{tick} - {round(volat,2)}%') for (tick, volat) in ticker_forsort[:3]]
+
+        print('Минимальная волатильнсть')
+        ticker_forsort.sort(key=lambda i: i[1])
+        result = [x for x in ticker_forsort if x[1] > 0][:3]
+        result.sort(key=lambda i: -i[1])
+        [print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result]
+
+        print('Нулевая волатильнсть')
+
+        ticker_forsort.sort(key=lambda x: x[0])
+        print(','.join([x[0] for x in ticker_forsort if x[1] == 0]))
+
+
+dir = 'trades'
+
+ticker_oject = ProcessTiker(dir)
+ticker_oject.run()
+
+
+    
+
+
+
