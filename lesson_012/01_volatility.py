@@ -95,6 +95,7 @@ class ProcessTiker:
             f_file.readline()
             for line in f_file:
                 if not first:
+                    first = False
                     try:
                         varible = float(line[:-1].split(',')[2])
                         if varible > maximum:
