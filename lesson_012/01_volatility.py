@@ -95,7 +95,6 @@ class ProcessTiker:
             f_file.readline()
             for line in f_file:
                 if not first:
-                    first = False
                     try:
                         varible = float(line[:-1].split(',')[2])
                         if varible > maximum:
@@ -115,13 +114,13 @@ class ProcessTiker:
                 average_price = (maximum + minimum) / 2
 
                 volatility = ((maximum - minimum) / average_price) * 100
-                return [ticker_name, volatility]
+                return ticker_name, volatility
 
             except (ValueError, BaseException) as exc:
                 print(exc)
 
 
-dir = 'trades'
+dir = '../../trades'
 
 full_dir_name = os.path.join(os.getcwd(), dir)
 tickers = []
