@@ -95,7 +95,6 @@ class ProcessTiker:
             f_file.readline()
             for line in f_file:
                 if not first:
-                    first = False
                     try:
                         varible = float(line[:-1].split(',')[2])
                         if varible > maximum:
@@ -106,8 +105,11 @@ class ProcessTiker:
                     except BaseException as exc:
                         print(exc)
                 else:
-                    maximum, minimum = float(line[:-1].split(',')[2])
-                    ticker_name = line[:-1].split(',')[0]
+                    maximum, minimum = float(line[:-1].split(',')[2])  # TODO это код не работает
+                    # File "lesson_012/01_volatility.py", line 109, in run
+                    # maximum, minimum = float(line[:-1].split(',')[2])
+                    # TypeError: cannot unpack non-iterable float object
+                    ticker_name = line[:-1].split(',')[0]  # TODO дублируете код line[:-1].split(',')
                     first = False
 
             try:
