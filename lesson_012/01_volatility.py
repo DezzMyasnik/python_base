@@ -106,11 +106,9 @@ class ProcessTiker:
                     except BaseException as exc:
                         print(exc)
                 else:
-                    maximum, minimum = float(line[:-1].split(',')[2])  # TODO это код не работает
-                    # File "lesson_012/01_volatility.py", line 109, in run
-                    # maximum, minimum = float(line[:-1].split(',')[2])
-                    # TypeError: cannot unpack non-iterable float object
-                    ticker_name = line[:-1].split(',')[0]  # TODO дублируете код line[:-1].split(',')
+                    first_init = line[:-1].split(',')
+                    maximum = minimum = float(first_init[2])
+                    ticker_name = first_init[0]
                     first = False
 
             try:
