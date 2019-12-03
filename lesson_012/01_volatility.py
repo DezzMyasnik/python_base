@@ -65,12 +65,7 @@
 #
 
 
-
-# TODO Код праильнее организовать след образом
-#  1) Главный цикл по всем файлам
-    #  2) Обработка каждого файла объект класса ниже, которому передается путь до файла
-#  3) Вывод общей статистики
-
+#
 
 # Для плавного перехода к мультипоточности, код оформить в обьектном стиле, используя следующий каркас
 #
@@ -84,64 +79,59 @@
 
 
 import os
-from collections import defaultdict, OrderedDict
+from collections import defaultdict
+
 
 class ProcessTiker:
+    tick_ticker = defaultdict(float)
 
-    def __init__(self,dir_name,*argds,**kwargs):
-        self.full_dir_name = f'{os.getcwd()}\\{dir}'
-        self.ticker = defaultdict(float)
+    def __init__(self, file_name, *argds, **kwargs):
+        self.full_file_name = file_name
 
-    def proceess_ticker_list(self, list_of_line):
-        list_of_line.pop(0)
-        minimum = float(min(list_of_line, key=lambda element: float(element[2]))[2])
-        maximum = float(max(list_of_line, key=lambda element: float(element[2]))[2])
-        average_price = (maximum + minimum) / 2  # TODO можно получить деление на 0 или сложение двух None если файл пуст
-        volatility = ((maximum - minimum) / average_price) * 100
-        tickername = list_of_line[0][0]
-        self.ticker[tickername] += volatility
+    def proceess_ticker_list(self, maximum, minimum):
+        try:
+            average_price = (float(maximum[2]) + float(minimum[2])) / 2
+            volatility = ((float(maximum[2]) - float(minimum[2])) / average_price) * 100
+            tickername = maximum[0]
+            ProcessTiker.tick_ticker[tickername] += volatility
+        except (ValueError, BaseException) as exc:
+            print(exc)
 
+    def report_read(self, file_name):
 
-
-    def report_read(self,file_name):
-        tiker_list = []
         with open(file_name, 'r', encoding='utf-8') as f_file:
-            for line in f_file:
-                tiker_list.append(line[:-1].split(','))  # TODO файл может оказаться большим и не влезть в память,
-                # нам нужно только мин и макс, для этого не нуэно хранить все данные  в памяти
-
-            self.proceess_ticker_list(tiker_list)
-
+            result = [line[:-1].split(',') for line in f_file]
+            result.pop(0)
+            result.sort(key=lambda x: -float(x[2]))
+            maximum = result[0]
+            minimum = result[-1]
+            self.proceess_ticker_list(maximum, minimum)
 
     def run(self):
-        for file in os.listdir(self.full_dir_name):
-            file_name = f'{self.full_dir_name}\\{file}'  # TODO для работы с путями используйте os.path.join
-            self.report_read(file_name)
-
-        ticker_forsort = list(self.ticker.items())
-        ticker_forsort.sort(key=lambda i: -i[1])
-        print('Маскимальная волатильнсть')
-        [print(f'{tick} - {round(volat,2)}%') for (tick, volat) in ticker_forsort[:3]]
-
-        print('Минимальная волатильнсть')
-        ticker_forsort.sort(key=lambda i: i[1])
-        result = [x for x in ticker_forsort if x[1] > 0][:3]
-        result.sort(key=lambda i: -i[1])
-        [print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result]
-
-        print('Нулевая волатильнсть')
-
-        ticker_forsort.sort(key=lambda x: x[0])
-        print(','.join([x[0] for x in ticker_forsort if x[1] == 0]))
+        self.report_read(self.full_file_name)
 
 
 dir = 'trades'
 
-ticker_oject = ProcessTiker(dir)
-ticker_oject.run()
+full_dir_name = os.path.join(os.getcwd(), dir)
 
+for file in os.listdir(full_dir_name):
+    file_name = os.path.join(full_dir_name, file)
+    ticker_oject = ProcessTiker(file_name)
+    ticker_oject.run()
 
-    
+ticker_forsort = list(ProcessTiker.tick_ticker.items())
+ticker_forsort.sort(key=lambda i: -i[1])
+print('Маскимальная волатильнсть')
+[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in ticker_forsort[:3]]
 
+print('Минимальная волатильнсть')
+ticker_forsort.sort(key=lambda i: i[1])
+result = [x for x in ticker_forsort if x[1] > 0][:3]
+result.sort(key=lambda i: -i[1])
+[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result]
 
+print('Нулевая волатильнсть')
 
+ticker_forsort.sort(key=lambda x: x[0])
+print(','.join([x[0] for x in ticker_forsort if x[1] == 0]))
