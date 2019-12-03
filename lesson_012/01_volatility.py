@@ -83,57 +83,62 @@ from collections import defaultdict
 
 
 class ProcessTiker:
-    tick_ticker = defaultdict(float)  # TODO  не нужно хранить эти данные на уровне класса, просто
-    # возращайте и результаты обработки из метода run
 
     def __init__(self, file_name, *argds, **kwargs):
         self.full_file_name = file_name
 
-    def proceess_ticker_list(self, maximum, minimum):
-        try:
-            average_price = (float(maximum[2]) + float(minimum[2])) / 2
-            volatility = ((float(maximum[2]) - float(minimum[2])) / average_price) * 100
-            tickername = maximum[0]
-            ProcessTiker.tick_ticker[tickername] += volatility
-        except (ValueError, BaseException) as exc:
-            print(exc)
-
-    def report_read(self, file_name):
-
-        with open(file_name, 'r', encoding='utf-8') as f_file:
-            result = [line[:-1].split(',') for line in f_file]  # TODO договаривались что не будем читать весь файл,
-            # нам нужно определить минимум и максимум, для этого не нужно держать все данные в памяти
-            result.pop(0)
-            result.sort(key=lambda x: -float(x[2]))
-            maximum = result[0]
-            minimum = result[-1]
-            self.proceess_ticker_list(maximum, minimum)
-
     def run(self):
-        self.report_read(self.full_file_name)
+        maximum = 0
+        minimum = 0
+        first = True
+        with open(self.full_file_name, 'r', encoding='utf-8') as f_file:
+            f_file.readline()
+            for line in f_file:
+                if not first:
+                    first = False
+                    try:
+                        varible = float(line[:-1].split(',')[2])
+                        if varible > maximum:
+                            maximum = varible
+
+                        if varible < minimum:
+                            minimum = varible
+                    except BaseException as exc:
+                        print(exc)
+                else:
+                    maximum, minimum = float(line[:-1].split(',')[2])
+                    ticker_name = line[:-1].split(',')[0]
+                    first = False
+
+            try:
+                average_price = (maximum + minimum) / 2
+
+                volatility = ((maximum - minimum) / average_price) * 100
+                return [ticker_name, volatility]
+
+            except (ValueError, BaseException) as exc:
+                print(exc)
 
 
-dir = 'trades'
+r = 'trades'
 
 full_dir_name = os.path.join(os.getcwd(), dir)
-
+tickers = []
 for file in os.listdir(full_dir_name):
     file_name = os.path.join(full_dir_name, file)
     ticker_oject = ProcessTiker(file_name)
-    ticker_oject.run()
+    tickers.append(ticker_oject.run())
 
-ticker_forsort = list(ProcessTiker.tick_ticker.items())
-ticker_forsort.sort(key=lambda i: -i[1])
+tickers.sort(key=lambda i: -i[1])
+result = [x for x in tickers if x[1] > 0]
 print('Маскимальная волатильнсть')
-[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in ticker_forsort[:3]]
+[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result[:3]]
 
 print('Минимальная волатильнсть')
-ticker_forsort.sort(key=lambda i: i[1])  # TODO мне кажется достаточно одной сортировки для нахождения мин и макс
-result = [x for x in ticker_forsort if x[1] > 0][:3]
-result.sort(key=lambda i: -i[1])
-[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result]
+
+[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result[-3:]]
 
 print('Нулевая волатильнсть')
 
-ticker_forsort.sort(key=lambda x: x[0])
-print(','.join(x[0] for x in ticker_forsort if x[1] == 0))
+tickers.sort(key=lambda x: x[0])
+print(','.join(x[0] for x in tickers if x[1] == 0))
