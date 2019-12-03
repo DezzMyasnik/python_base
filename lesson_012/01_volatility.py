@@ -63,6 +63,15 @@
 # Подсказка: нужно последовательно открывать каждый файл, вычитывать данные, высчитывать волатильность и запоминать.
 # Вывод на консоль можно сделать только после обработки всех файлов.
 #
+
+
+
+# TODO Код праильнее организовать след образом
+#  1) Главный цикл по всем файлам
+    #  2) Обработка каждого файла объект класса ниже, которому передается путь до файла
+#  3) Вывод общей статистики
+
+
 # Для плавного перехода к мультипоточности, код оформить в обьектном стиле, используя следующий каркас
 #
 # class <Название класса>:
@@ -87,7 +96,7 @@ class ProcessTiker:
         list_of_line.pop(0)
         minimum = float(min(list_of_line, key=lambda element: float(element[2]))[2])
         maximum = float(max(list_of_line, key=lambda element: float(element[2]))[2])
-        average_price = (maximum + minimum) / 2
+        average_price = (maximum + minimum) / 2  # TODO можно получить деление на 0 или сложение двух None если файл пуст
         volatility = ((maximum - minimum) / average_price) * 100
         tickername = list_of_line[0][0]
         self.ticker[tickername] += volatility
@@ -98,14 +107,15 @@ class ProcessTiker:
         tiker_list = []
         with open(file_name, 'r', encoding='utf-8') as f_file:
             for line in f_file:
-                tiker_list.append(line[:-1].split(','))
+                tiker_list.append(line[:-1].split(','))  # TODO файл может оказаться большим и не влезть в память,
+                # нам нужно только мин и макс, для этого не нуэно хранить все данные  в памяти
 
             self.proceess_ticker_list(tiker_list)
 
 
     def run(self):
         for file in os.listdir(self.full_dir_name):
-            file_name = f'{self.full_dir_name}\\{file}'
+            file_name = f'{self.full_dir_name}\\{file}'  # TODO для работы с путями используйте os.path.join
             self.report_read(file_name)
 
         ticker_forsort = list(self.ticker.items())
