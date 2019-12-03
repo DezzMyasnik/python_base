@@ -120,7 +120,7 @@ class ProcessTiker:
                 print(exc)
 
 
-r = 'trades'
+dir = 'trades'
 
 full_dir_name = os.path.join(os.getcwd(), dir)
 tickers = []
