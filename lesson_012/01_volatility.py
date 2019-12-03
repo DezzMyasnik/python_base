@@ -83,7 +83,8 @@ from collections import defaultdict
 
 
 class ProcessTiker:
-    tick_ticker = defaultdict(float)
+    tick_ticker = defaultdict(float)  # TODO  не нужно хранить эти данные на уровне класса, просто
+    # возращайте и результаты обработки из метода run
 
     def __init__(self, file_name, *argds, **kwargs):
         self.full_file_name = file_name
@@ -100,7 +101,8 @@ class ProcessTiker:
     def report_read(self, file_name):
 
         with open(file_name, 'r', encoding='utf-8') as f_file:
-            result = [line[:-1].split(',') for line in f_file]
+            result = [line[:-1].split(',') for line in f_file]  # TODO договаривались что не будем читать весь файл,
+            # нам нужно определить минимум и максимум, для этого не нужно держать все данные в памяти
             result.pop(0)
             result.sort(key=lambda x: -float(x[2]))
             maximum = result[0]
@@ -126,7 +128,7 @@ print('Маскимальная волатильнсть')
 [print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in ticker_forsort[:3]]
 
 print('Минимальная волатильнсть')
-ticker_forsort.sort(key=lambda i: i[1])
+ticker_forsort.sort(key=lambda i: i[1])  # TODO мне кажется достаточно одной сортировки для нахождения мин и макс
 result = [x for x in ticker_forsort if x[1] > 0][:3]
 result.sort(key=lambda i: -i[1])
 [print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result]
@@ -134,4 +136,4 @@ result.sort(key=lambda i: -i[1])
 print('Нулевая волатильнсть')
 
 ticker_forsort.sort(key=lambda x: x[0])
-print(','.join([x[0] for x in ticker_forsort if x[1] == 0]))
+print(','.join(x[0] for x in ticker_forsort if x[1] == 0))
