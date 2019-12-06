@@ -19,4 +19,77 @@
 #
 # TODO Внимание! это задание можно выполнять только после зачета lesson_012/01_volatility.py !!!
 
-# TODO тут ваш код в многопоточном стиле
+import os
+from collections import defaultdict
+from threading import Thread
+
+class ProcessTiker(Thread):
+
+    def __init__(self, file_name, *args, **kwargs):
+        super(ProcessTiker, self).__init__(*args, **kwargs)
+        self.full_file_name = file_name
+        self.ticker_volat = []
+
+    def run(self):
+        maximum = 0
+        minimum = 0
+        first = True
+        with open(self.full_file_name, 'r', encoding='utf-8') as f_file:
+            f_file.readline()
+            for line in f_file:
+                if not first:
+                    try:
+                        varible = float(line[:-1].split(',')[2])
+                        if varible > maximum:
+                            maximum = varible
+
+                        if varible < minimum:
+                            minimum = varible
+                    except BaseException as exc:
+                        print(exc)
+                else:
+                    first_init = line[:-1].split(',')
+                    maximum = minimum = float(first_init[2])
+                    ticker_name = first_init[0]
+                    first = False
+
+            try:
+                average_price = (maximum + minimum) / 2
+
+                volatility = ((maximum - minimum) / average_price) * 100
+                self.ticker_volat = [ticker_name, volatility]
+
+            except (ValueError, BaseException) as exc:
+                print(exc)
+
+
+dir = 'trades'
+
+full_dir_name = os.path.join(os.getcwd(), dir)
+
+tickers = []
+ticker_threads = [ProcessTiker(file_name=os.path.join(full_dir_name, file)) for file in os.listdir(full_dir_name)]
+
+for threads in ticker_threads:
+    threads.start()
+
+for threads in ticker_threads:
+    threads.join()
+    tickers.append(threads.ticker_volat)
+
+
+
+
+tickers.sort(key=lambda i: -i[1])
+result = [x for x in tickers if x[1] > 0]
+print('Маскимальная волатильнсть')
+[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result[:3]]
+
+print('Минимальная волатильнсть')
+
+[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result[-3:]]
+
+print('Нулевая волатильнсть')
+
+tickers.sort(key=lambda x: x[0])
+print(','.join(x[0] for x in tickers if x[1] == 0))
