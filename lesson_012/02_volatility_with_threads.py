@@ -65,6 +65,8 @@ class ProcessTiker(Thread):
 
 dir = 'trades'
 
+# TODO код рабочий, но в образовательных целях хотелось бы решение
+#  через общий контейнер(который передается в конструкторе) + примитив синхронизации
 full_dir_name = os.path.join(os.getcwd(), dir)
 
 tickers = []
