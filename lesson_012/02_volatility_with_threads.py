@@ -22,13 +22,14 @@
 import os
 from collections import defaultdict
 from threading import Thread
-
+import threading
 class ProcessTiker(Thread):
 
-    def __init__(self, file_name, *args, **kwargs):
+    def __init__(self, file_name, ticker_volatilnost,locker, *args, **kwargs):
         super(ProcessTiker, self).__init__(*args, **kwargs)
         self.full_file_name = file_name
-        self.ticker_volat = []
+        self.ticker_volat = ticker_volatilnost
+        self.ticker_volat_lock = locker
 
     def run(self):
         maximum = 0
@@ -57,7 +58,9 @@ class ProcessTiker(Thread):
                 average_price = (maximum + minimum) / 2
 
                 volatility = ((maximum - minimum) / average_price) * 100
-                self.ticker_volat = [ticker_name, volatility]
+                self.ticker_volat_lock.acquire()
+                self.ticker_volat[ticker_name] += volatility
+                self.ticker_volat_lock.release()
 
             except (ValueError, BaseException) as exc:
                 print(exc)
@@ -69,19 +72,21 @@ dir = 'trades'
 #  через общий контейнер(который передается в конструкторе) + примитив синхронизации
 full_dir_name = os.path.join(os.getcwd(), dir)
 
-tickers = []
-ticker_threads = [ProcessTiker(file_name=os.path.join(full_dir_name, file)) for file in os.listdir(full_dir_name)]
+tickers = defaultdict(float)
+lock = threading.Lock()
+ticker_threads = [ProcessTiker(file_name=os.path.join(full_dir_name, file),ticker_volatilnost=tickers,
+                               locker=lock) for file in os.listdir(full_dir_name)]
 
 for threads in ticker_threads:
     threads.start()
 
 for threads in ticker_threads:
     threads.join()
-    tickers.append(threads.ticker_volat)
 
 
 
 
+tickers = list(tickers.items())
 tickers.sort(key=lambda i: -i[1])
 result = [x for x in tickers if x[1] > 0]
 print('Маскимальная волатильнсть')
