@@ -58,9 +58,9 @@ class ProcessTiker(Thread):
                 average_price = (maximum + minimum) / 2
 
                 volatility = ((maximum - minimum) / average_price) * 100
-                self.ticker_volat_lock.acquire()
-                self.ticker_volat[ticker_name] += volatility
-                self.ticker_volat_lock.release()
+
+                with self.ticker_volat_lock:
+                    self.ticker_volat[ticker_name] += volatility
 
             except (ValueError, BaseException) as exc:
                 print(exc)
@@ -68,8 +68,6 @@ class ProcessTiker(Thread):
 
 dir = 'trades'
 
-# TODO код рабочий, но в образовательных целях хотелось бы решение
-#  через общий контейнер(который передается в конструкторе) + примитив синхронизации
 full_dir_name = os.path.join(os.getcwd(), dir)
 
 tickers = defaultdict(float)
@@ -100,3 +98,4 @@ print('Нулевая волатильнсть')
 
 tickers.sort(key=lambda x: x[0])
 print(','.join(x[0] for x in tickers if x[1] == 0))
+#зачет!
