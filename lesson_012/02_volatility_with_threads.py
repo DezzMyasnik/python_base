@@ -23,9 +23,12 @@ import os
 from collections import defaultdict
 from threading import Thread
 import threading
+from python_snippets.utils import time_track
+
+
 class ProcessTiker(Thread):
 
-    def __init__(self, file_name, ticker_volatilnost,locker, *args, **kwargs):
+    def __init__(self, file_name, ticker_volatilnost, locker, *args, **kwargs):
         super(ProcessTiker, self).__init__(*args, **kwargs)
         self.full_file_name = file_name
         self.ticker_volat = ticker_volatilnost
@@ -66,36 +69,38 @@ class ProcessTiker(Thread):
                 print(exc)
 
 
-dir = 'trades'
+@time_track
+def main():
+    dir = 'trades'
 
-full_dir_name = os.path.join(os.getcwd(), dir)
+    full_dir_name = os.path.join(os.getcwd(), dir)
 
-tickers = defaultdict(float)
-lock = threading.Lock()
-ticker_threads = [ProcessTiker(file_name=os.path.join(full_dir_name, file),ticker_volatilnost=tickers,
-                               locker=lock) for file in os.listdir(full_dir_name)]
+    tickers = defaultdict(float)
+    lock = threading.Lock()
+    ticker_threads = [ProcessTiker(file_name=os.path.join(full_dir_name, file), ticker_volatilnost=tickers,
+                                   locker=lock) for file in os.listdir(full_dir_name)]
 
-for threads in ticker_threads:
-    threads.start()
+    for threads in ticker_threads:
+        threads.start()
 
-for threads in ticker_threads:
-    threads.join()
+    for threads in ticker_threads:
+        threads.join()
+
+    tickers = list(tickers.items())
+    tickers.sort(key=lambda i: -i[1])
+    result = [x for x in tickers if x[1] > 0]
+    print('Маскимальная волатильнсть')
+    [print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result[:3]]
+
+    print('Минимальная волатильнсть')
+
+    [print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result[-3:]]
+
+    print('Нулевая волатильнсть')
+
+    tickers.sort(key=lambda x: x[0])
+    print(','.join(x[0] for x in tickers if x[1] == 0))
 
 
-
-
-tickers = list(tickers.items())
-tickers.sort(key=lambda i: -i[1])
-result = [x for x in tickers if x[1] > 0]
-print('Маскимальная волатильнсть')
-[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result[:3]]
-
-print('Минимальная волатильнсть')
-
-[print(f'{tick} - {round(volat, 2)}%') for (tick, volat) in result[-3:]]
-
-print('Нулевая волатильнсть')
-
-tickers.sort(key=lambda x: x[0])
-print(','.join(x[0] for x in tickers if x[1] == 0))
-#зачет!
+main()
+# зачет!
