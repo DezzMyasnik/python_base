@@ -29,10 +29,9 @@ from python_snippets.utils import time_track
 
 class ProcessTiker(multiprocessing.Process):
 
-    def __init__(self, file_name, ticker_volatilnost, collector, *args, **kwargs):
+    def __init__(self, file_name, collector, *args, **kwargs):
         super(ProcessTiker, self).__init__(*args, **kwargs)
         self.full_file_name = file_name
-        self.ticker_volat = ticker_volatilnost
         self.collector = collector
 
     def run(self):
@@ -62,10 +61,7 @@ class ProcessTiker(multiprocessing.Process):
                 average_price = (maximum + minimum) / 2
 
                 volatility = ((maximum - minimum) / average_price) * 100
-                self.ticker_volat[ticker_name] += volatility
                 self.collector.put([ticker_name, volatility])
-                # with self.ticker_volat_lock:
-                #    self.ticker_volat[ticker_name] += volatility
 
             except (ValueError, BaseException) as exc:
                 print(exc)
@@ -73,14 +69,13 @@ class ProcessTiker(multiprocessing.Process):
 
 @time_track
 def main():
-    dir = 'trades'
+    dir = '../../trades'
 
     full_dir_name = os.path.join(os.getcwd(), dir)
 
-    tickers = defaultdict(float)
     # lock = threading.Lock()
     collector = multiprocessing.Queue()
-    ticker_process = [ProcessTiker(file_name=os.path.join(full_dir_name, file), ticker_volatilnost=tickers,
+    ticker_process = [ProcessTiker(file_name=os.path.join(full_dir_name, file),
                                    collector=collector) for file in os.listdir(full_dir_name)]
 
     for threads in ticker_process:
@@ -112,3 +107,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+# зачет!
