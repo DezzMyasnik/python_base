@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
+
 # Заполнить все поля в билете на самолет.
 # Создать функцию, принимающую параметры: ФИО, откуда, куда, дата вылета,
 # и заполняющую ими шаблон билета Skillbox Airline.
@@ -8,9 +9,9 @@
 # Пример заполнения lesson_013/images/ticket_sample.png
 # Подходящий шрифт искать на сайте ofont.ru
 import os
-from PIL import Image, ImageDraw, ImageFont, ImageColor
-import datetime
 import argparse
+from PIL import Image, ImageDraw, ImageFont, ImageColor
+
 
 class TicketMaker:
 
@@ -24,9 +25,8 @@ class TicketMaker:
             print("Один из обязательных параметров не указан")
 
         self.save_to = save_to
-        self.template =os.path.join("images", "ticket_template.png")
+        self.template = os.path.join("images", "ticket_template.png")
         self.font_path = os.path.join("python_snippets", "fonts", "ofont_ru_Muller.ttf")
-
 
     def make(self):
         im = Image.open(self.template)
@@ -43,10 +43,9 @@ class TicketMaker:
         y = im.size[1] - 90 - (10 + font.size) * 2
         draw.text((45, y), self.to.upper(), font=font, fill=ImageColor.colormap['black'])
 
-
         y = im.size[1] - 90 - (10 + font.size) * 2
         draw.text((280, y), self.date.upper(), font=font, fill=ImageColor.colormap['black'])
-        #im.show()
+        # im.show()
         out_path = self.save_to if self.save_to else 'ticket_out.png'
         im.save(out_path)
         print(f'Ticket saved az {out_path}')
@@ -54,14 +53,15 @@ class TicketMaker:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Ticket former')
-    parser.add_argument('-fio',type=str, required=True, help='ФИО пассажира')
+    parser.add_argument('-fio', type=str, required=True, help='ФИО пассажира')
     parser.add_argument('-from_place', type=str, required=True, help='Место отправления')
     parser.add_argument('-to_place', type=str, required=True, help='Место назначения')
     parser.add_argument('-date', type=str, required=True, help='Дата отправления')
-    parser.add_argument('-save_to',type=str, required=False,help='имя файла для сохранения')
+    parser.add_argument('-save_to', type=str, required=False, help='имя файла для сохранения')
     args = parser.parse_args()
-    maker = TicketMaker(fio=args.fio, from_place=args.from_place, to=args.to_place, date=args.date, save_to=args.save_to)
-    #maker = TicketMaker(fio='Оля Иванова', from_place='Ленинград', to='Москва', date='10.10.2019', save_to='ticket_.png')
+    maker = TicketMaker(fio=args.fio, from_place=args.from_place, to=args.to_place, date=args.date,
+                        save_to=args.save_to)
+
     maker.make()
 
 # Усложненное задание (делать по желанию).
