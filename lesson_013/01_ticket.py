@@ -16,7 +16,8 @@ from PIL import Image, ImageDraw, ImageFont, ImageColor
 class TicketMaker:
 
     def __init__(self, fio, from_place, to, date, save_to=None):
-        if (fio, from_place, to, date) is not None:
+        if (fio, from_place, to, date) is not None:   # TODO (fio, from_place, to, date) - распечатайте что это,
+            # и подумаете про значение вашего условия
             self.fio = fio
             self.from_place = from_place
             self.to = to
@@ -46,9 +47,8 @@ class TicketMaker:
         y = im.size[1] - 90 - (10 + font.size) * 2
         draw.text((280, y), self.date.upper(), font=font, fill=ImageColor.colormap['black'])
         # im.show()
-        out_path = self.save_to if self.save_to else 'ticket_out.png'
-        im.save(out_path)
-        print(f'Ticket saved az {out_path}')
+        im.save(self.save_to)
+        print(f'Ticket saved az {self.save_to}')
 
 
 if __name__ == '__main__':
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     parser.add_argument('-from_place', type=str, required=True, help='Место отправления')
     parser.add_argument('-to_place', type=str, required=True, help='Место назначения')
     parser.add_argument('-date', type=str, required=True, help='Дата отправления')
-    parser.add_argument('-save_to', type=str, required=False, help='имя файла для сохранения')
+    parser.add_argument('-save_to', type=str, required=False, default='ticket_out.png', help='имя файла для сохранения')
     args = parser.parse_args()
     maker = TicketMaker(fio=args.fio, from_place=args.from_place, to=args.to_place, date=args.date,
                         save_to=args.save_to)
