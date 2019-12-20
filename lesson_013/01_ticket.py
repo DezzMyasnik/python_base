@@ -26,7 +26,7 @@ class TicketMaker:
 
         self.save_to = save_to
         self.template = os.path.join("images", "ticket_template.png")
-        self.font_path = os.path.join("python_snippets", "fonts", "ofont_ru_Muller.ttf")
+        self.font_path = os.path.join( "ofont_ru_Muller.ttf")
 
     def make(self):
         im = Image.open(self.template)
