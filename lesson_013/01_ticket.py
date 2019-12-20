@@ -16,18 +16,15 @@ from PIL import Image, ImageDraw, ImageFont, ImageColor
 class TicketMaker:
 
     def __init__(self, fio, from_place, to, date, save_to=None):
-        if (fio, from_place, to, date) is not None:   # TODO (fio, from_place, to, date) - распечатайте что это,
-            # и подумаете про значение вашего условия
-            self.fio = fio
-            self.from_place = from_place
-            self.to = to
-            self.date = date
-        else:
-            print("Один из обязательных параметров не указан")
 
+
+        self.fio = fio
+        self.from_place = from_place
+        self.to = to
+        self.date = date
         self.save_to = save_to
         self.template = os.path.join("images", "ticket_template.png")
-        self.font_path = os.path.join( "ofont_ru_Muller.ttf")
+        self.font_path = os.path.join("ofont_ru_Muller.ttf")
 
     def make(self):
         im = Image.open(self.template)
