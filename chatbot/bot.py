@@ -44,3 +44,4 @@ class Bot:
 if __name__ == '__main__':
     chat_bot = Bot(APIKEY, PUBLIC_ID)
     chat_bot.run()
+#зачет!
