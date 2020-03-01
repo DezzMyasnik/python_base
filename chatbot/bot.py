@@ -4,16 +4,41 @@ import random
 
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
-
-APIKEY = '3373bf96b11f8169de9c85c56224e2134b185c192bd3dc637de8bdd06bbee6afff681620ea2382bf1a8d8'
-PUBLIC_ID = 130111251
+import logging
+from settings import *
 
 
 # TODO https://vk.com/grandminds
+log = logging.getLogger('BotLog')
+def logconfig():
+    """
+    Конфигурация логгера
+    :return:
+    """
+    stream_logger = logging.StreamHandler()
+    stream_logger.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
+    stream_logger.setLevel(logging.INFO)
+    log.addHandler(stream_logger)
+
+
+    filehandler = logging.FileHandler(LOG_FILE_NAME, 'a', 'utf-8')
+    formatter = logging.Formatter(LOG_FORMAT)
+    formatter.datefmt = '%d-%m-%Y %H:%M'
+    filehandler.setLevel(logging.DEBUG)
+    # все возможные аттрибуты см https://docs.python.org/3.5/library/logging.html#logrecord-attributes
+    filehandler.setFormatter(formatter)
+    log.addHandler(filehandler)
+    log.setLevel(logging.DEBUG)
+
+
 
 class Bot:
-
     def __init__(self, token, group_id):
+        """
+        Initial vk  bot
+        :param token: secret token from vk.com
+        :param group_id: group id in vk
+        """
         self.vk_token = token
         self.group_id = group_id
         self.vk_session = vk_api.VkApi(token=self.vk_token)
@@ -21,27 +46,40 @@ class Bot:
         self.vk = self.vk_session.get_api()
 
     def run(self):
+        """
+        запуск прослушивателя longpool сервера
+        :return:
+        """
         try:
             for event in self.long_poller.listen():
                 self.on_event(event)
 
-        except Exception as exc:
-            print(f'Ошибка:{exc}')
+        except Exception:
+            log.exception('Ошибка обработки сообщения')
+
 
     def on_event(self, event):
+        """
+        Обработчик события
+        :param event: событие в пришедшее от vk
+        :return:
+        """
 
         if event.type is VkBotEventType.MESSAGE_NEW:
-            print(f'Новое сообщение:{event.message.text}')
+            log.debug("пришло сообщение")
+            #print(f'Новое сообщение:{event.message.text}')
             self.vk.messages.send(peer_id=event.group_id * (-1),
                                   user_id=event.message.from_id,
                                   chat_id=event.chat_id,
-                                  message=f'я Вас услышал, Вы сказали: {event.message.text}'.upper(),
+                                  message=event.message.text,
                                   random_id=random.randint(10, 20000000))
         else:
-            print(f'этого еще не умею. пришло {event.type}')
+            log.info(f'этого еще не умею. пришло {event.type}')
+            #print(f'этого еще не умею. пришло {event.type}')
 
 
 if __name__ == '__main__':
+    logconfig()
     chat_bot = Bot(APIKEY, PUBLIC_ID)
     chat_bot.run()
 #зачет!
