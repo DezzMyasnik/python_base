@@ -1,27 +1,20 @@
 # -*- coding: utf-8 -*-
 
 
-
-
-
-
-
-
-
 class ScoreCounter:
 
 
     def get_score(self,game_result):
 
-        valid_data = ['X','/']
-        valid_data.extend(range(1,10))
+        valid_data = ['X','/']  # TODO а '-'?
+        valid_data.extend(range(1,10))  # TODO для быстрого поиска правильнее использовать другой контейнер 
         if game_result[0] is '/':
             raise ValueError("Не верная запись результата")
         game_result = list(game_result)
         score = 0
         counter = 0
         subcounter =0
-        for i in range(len(game_result)):
+        for i in range(len(game_result)):  # TODO удобнее использовать enumerate
 
             if game_result[i].isdigit():
                 game_result[i] = int(game_result[i])
@@ -51,4 +44,11 @@ class ScoreCounter:
         else:
             raise ValueError("Короткая строка с результатом")
 
+# TODO ваше решение
+#  1) отклоняет правильные строки
+#  'X'*9 + '--'
+
+#  2) принимает неправильные
+#  'X'*9 + '55'
+#  'X'*9 + '/2' - unsupported operand type(s) for -=: 'int' and 'str' странная ошибка
 
