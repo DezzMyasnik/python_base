@@ -6,31 +6,36 @@ class ScoreCounter:
 
     def get_score(self,game_result):
 
-        valid_data = ['X','/']  # TODO а '-'?
-        valid_data.extend(range(1,10))  # TODO для быстрого поиска правильнее использовать другой контейнер 
-        if game_result[0] is '/':
-            raise ValueError("Не верная запись результата")
+        valid_data = ['X','/','-']
+        valid_data.extend(range(1,10))
+        #if game_result[0] is '/':
+        #    raise ValueError("Не верная запись результата")
         game_result = list(game_result)
         score = 0
         counter = 0
-        subcounter =0
-        for i in range(len(game_result)):  # TODO удобнее использовать enumerate
+        subcounter = 0
+        for i,item in enumerate(game_result):
 
-            if game_result[i].isdigit():
-                game_result[i] = int(game_result[i])
-            if game_result[i] in valid_data:
+            if item.isdigit():
+                item = int(item)
+            if item in valid_data:
                 if subcounter == 2:
                     counter += 1
                     subcounter = 0
-                if game_result[i] is 'X':
+                if item is 'X':
                     score += 20
                     subcounter += 2
-                elif game_result[i] is '/':
-                    score -= game_result[i-1]
+                elif item is '/':
+                    if subcounter is 0:
+                         raise ValueError("Не верная запись результата")
+
+                    score -= int(game_result[i-1])
                     score += 15
                     subcounter += 1
+                elif item is '-':
+                    subcounter += 1
                 else:
-                    score += game_result[i]
+                    score += item
                     subcounter += 1
             else:
                 raise ValueError("Не верная запись результата")
@@ -44,11 +49,7 @@ class ScoreCounter:
         else:
             raise ValueError("Короткая строка с результатом")
 
-# TODO ваше решение
-#  1) отклоняет правильные строки
-#  'X'*9 + '--'
 
 #  2) принимает неправильные
-#  'X'*9 + '55'
-#  'X'*9 + '/2' - unsupported operand type(s) for -=: 'int' and 'str' странная ошибка
+#TODO  'X'*9 + '55' а почему это не правильный результат?
 
