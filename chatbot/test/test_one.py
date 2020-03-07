@@ -7,7 +7,7 @@ from vk_api.bot_longpoll import VkBotMessageEvent
 from bot import Bot
 class TestBot(unittest.TestCase):
 
-    RAW_DATA = {'type': 'message_new',
+    RAW_DATA = {'type': 'message_new',  # TODO правильнее использовать константу из vk_api
                 'object':
                     {'message':
                          {'date': 1579013554,
@@ -53,7 +53,7 @@ class TestBot(unittest.TestCase):
     def test_on_event(self):
         event = VkBotMessageEvent(raw=self.RAW_DATA)
         send_mock = Mock()
-        with patch('bot.vk_api.VkApi'):
+        with patch('bot.vk_api.VkApi'):  # TODO удобнее один with и ,
             with patch('bot.VkBotLongPoll'):
                 bot = Bot('','')
                 bot.vk = Mock()
