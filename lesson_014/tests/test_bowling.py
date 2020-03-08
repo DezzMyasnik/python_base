@@ -9,9 +9,9 @@ class BowlingTest(unittest.TestCase):
     def setUp(self):
         self.score = ScoreCounter()
 
-    def test_result(self):  
-        self.gemeresult = 'XXXXXXXXX55'
-        self.assertEqual(self.score.get_score(self.gemeresult),190)
+    def test_result(self):
+        self.gemeresult = '22XXXXXXXX--'
+        self.assertEqual(self.score.get_score(self.gemeresult), 164)
         self.gemeresult = 'XXXXXXXXX--'
         self.assertEqual(self.score.get_score(self.gemeresult), 180)
         self.gemeresult = 'XXXXXXXXX3-'
@@ -35,6 +35,11 @@ class BowlingTest(unittest.TestCase):
         self.assertRaises(ValueError, self.score.get_score, self.gemeresult)
         self.gemeresult = '27XXXXXXXX-'
         self.assertRaises(ValueError, self.score.get_score, self.gemeresult)
+        self.gemeresult = 'XXXXXXXXX55'
+        self.assertRaises(ValueError, self.score.get_score, self.gemeresult)
+        self.gemeresult = 'XXXXXXXXX56'
+        self.assertRaises(ValueError, self.score.get_score, self.gemeresult)
+
 
 if __name__ == '__main__':
     unittest.main()
