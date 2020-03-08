@@ -8,7 +8,7 @@ import logging
 from settings import *
 
 
-# TODO https://vk.com/grandminds
+# https://vk.com/grandminds
 log = logging.getLogger('BotLog')
 def logconfig():
     """

@@ -3,11 +3,13 @@
 
 import unittest
 from unittest.mock import Mock, patch, ANY
-from vk_api.bot_longpoll import VkBotMessageEvent
+from vk_api.bot_longpoll import VkBotMessageEvent, VkBotEventType
 from bot import Bot
 class TestBot(unittest.TestCase):
 
-    RAW_DATA = {'type': 'message_new',  # TODO правильнее использовать константу из vk_api
+
+
+    RAW_DATA = {'type': VkBotEventType.MESSAGE_NEW,
                 'object':
                     {'message':
                          {'date': 1579013554,
@@ -31,7 +33,6 @@ class TestBot(unittest.TestCase):
                 'group_id': 130111251,
                 'event_id': '22d14fb9553e9707375723b522669d28dcc42b7a'}
 
-
     def test_run(self):
         with patch('bot.vk_api.VkApi'):
             count = 5
@@ -53,12 +54,11 @@ class TestBot(unittest.TestCase):
     def test_on_event(self):
         event = VkBotMessageEvent(raw=self.RAW_DATA)
         send_mock = Mock()
-        with patch('bot.vk_api.VkApi'):  # TODO удобнее один with и ,
-            with patch('bot.VkBotLongPoll'):
-                bot = Bot('','')
-                bot.vk = Mock()
-                bot.vk.messages.send = send_mock
-                bot.on_event(event)
+        with patch('bot.vk_api.VkApi') and patch('bot.VkBotLongPoll'):
+            bot = Bot('','')
+            bot.vk = Mock()
+            bot.vk.messages.send = send_mock
+            bot.on_event(event)
 
         send_mock.assert_called_once_with(
             peer_id=self.RAW_DATA['group_id']*-1,
