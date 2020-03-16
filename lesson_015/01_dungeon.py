@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 # Подземелье было выкопано ящеро-подобными монстрами рядом с аномальной рекой, постоянно выходящей из берегов.
 # Из-за этого подземелье регулярно затапливается, монстры выживают, но не герои, рискнувшие спуститься к ним в поисках
 # приключений.
@@ -91,12 +92,180 @@
 #  ...
 #
 # и так далее...
-
+import json
+import re
+from decimal import *
+import csv
 
 remaining_time = '123456.0987654321'
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
 
-# TODO тут ваш код
+current_exp = 0
+current_location = ''
+current_date = datetime.datetime.now()
+
+
+def parse_location(item):
+    pattern = r'Location_(B\d+|\d+)_tm(\d*\.\d+|\d+)'
+    matched = re.search(pattern, item)
+    if matched:
+        num = matched[1]
+        tm = matched[2]
+        return num, tm
+    else:
+        return None
+
+
+def get_time_delta(current_time):
+    delta = datetime.datetime.now() - current_time
+    hours, remainder = divmod(delta.total_seconds(), 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f'{int(hours):02}:{int(minutes):02}:{int(seconds):02}'
+
+
+def atack_monster(item):
+    pattern = r'[MobBs\d]_exp(\d+)_tm(\d+){1,15}'
+    matched = re.search(pattern, item)
+    exp = matched[1]
+    tm = matched[2]
+    return exp, tm
+
+
+def hatch_keeper(item):
+    pattern = r'Hatch_tm(\d*\.\d+|\d+)'
+    matched = re.search(pattern, item)
+    if matched:
+        getcontext().prec = 20
+        tm = Decimal(matched[1])
+        return tm
+    else:
+        return None
+
+
+def csv_logger():
+    current = dict.fromkeys(field_names)
+    current[field_names[0]] = current_location
+    current[field_names[1]] = current_exp
+    current[field_names[2]] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    with open('dungeon.csv', "a", newline='') as out_file:
+        writer = csv.DictWriter(out_file, delimiter=',', fieldnames=field_names)
+        try:
+            writer.writerow(current)
+        except BaseException as excep:
+            print(f'Жесть какаято с логами:{excep}')
+
+
+def work_with_location(location):
+    global current_exp, remaining_time, current_location
+    current_location = list(dict.keys(location))[0]
+    values = list(dict.values(location))[0]
+    csv_logger()
+    print(f'Вы находитесь в локации {current_location}')
+    print(f'У вас {current_exp} опыта и осталось {remaining_time} секунд до наводнения')
+    if Decimal(remaining_time) < 0:
+        print("Время вышло. Герой утонул и почил смертью храбрых")
+        print("")
+        return 1
+    print(f'Прошло времени: {get_time_delta(current_date)}')
+    print("В локации вы видите: ")
+    if len(values) is 0:
+        print("Тупичек((((")
+        return 1
+    for subitem in values:
+        if isinstance(subitem, dict):
+            for loc in subitem:
+                print(f'-- Вход в локацию: {loc}')
+        else:
+            print(f'-- Монcтра: {subitem}')
+    print('Выберите действие:')
+    print('1.Атаковать монстра')
+    print('2.Перейти в другую локацию')
+    print('3.Сдаться и выйти из игры')
+    user_input = int(input())
+    if user_input is 1:
+        print("Вы выбрали Атаковать монстра")
+        for subitem in values:
+            if not isinstance(subitem, dict):
+                exp, tm = atack_monster(subitem)
+                current_exp = current_exp + int(exp)
+                getcontext().prec = 20
+                remaining_time = str(Decimal(remaining_time) - Decimal(tm))
+                values.remove(subitem)
+                # print(f'Опыта: {current_exp}, Времени до новодненеия: {remaining_time}')
+        modifed_dict = {}
+        modifed_dict[current_location] = values
+        work_with_location(modifed_dict)
+
+    elif user_input is 2:
+        print("Вы выбрали Перейти в локацию")
+
+        for subitem in values:
+            if isinstance(subitem, dict):
+                for loc in subitem:
+                    if parse_location(loc):
+                        num, tm = parse_location(loc)
+                        print(f'{num} .Вход в локацию: {loc}')
+                    else:
+                        if current_exp >= 280:
+                            time_hatch = hatch_keeper(loc)
+                            getcontext().prec = 20
+                            remaining_time = str(Decimal(remaining_time) - Decimal(time_hatch))
+                            print(f'Осталось времени до наводнеия {remaining_time}')
+                            print(list(dict.values(subitem))[0])
+                            return 2
+                        else:
+                            print("Вы добрались до выхода, но нахапали мало экспириенса((Это не позволит открыть дверь")
+                            return 1
+
+        user_input_location = input('Введите номер локации:')
+        pattern = r'Location_' + f'{user_input_location}' + r'_tm\d'
+        match = None
+        for subitem in values:
+            if isinstance(subitem, dict):
+                for loc in subitem:
+                    match = re.findall(pattern, loc)
+                    if match:
+                        num, tm = parse_location(loc)
+                        getcontext().prec = 20
+                        remaining_time = str(Decimal(remaining_time) - Decimal(tm))
+                        values.remove(subitem)
+                        work_with_location(subitem)
+
+        if not match:
+            print("Локация с таким номером не доступна")
+            modifed_dict = {}
+            modifed_dict[current_location] = values
+            work_with_location(modifed_dict)
+    elif user_input is 3:
+        print("Вы выбрали выйти из игры")
+        return 2
+    else:
+        print("Нет такого действия")
+
+
+def game_canvas():
+    global current_exp, remaining_time,current_location,current_date
+    with open("rpg.json", "r") as read_file:
+        loaded_json_file = json.load(read_file)
+    # print(dict.items(loaded_json_file))
+    doo = True
+    while doo:
+        do = work_with_location(loaded_json_file)
+        if do is 1:
+            doo = False
+        else:
+            break
+    else:
+        remaining_time = '123456.0987654321'
+        current_exp = 0
+        current_location = ''
+        current_date = datetime.datetime.now()
+        game_canvas()
+
+
+game_canvas()
+# print('Вы находитесь в Location_0_tm0')
 
 # Учитывая время и опыт, не забывайте о точности вычислений!
