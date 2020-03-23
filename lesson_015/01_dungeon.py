@@ -186,6 +186,7 @@ def work_with_location(location):
     user_input = int(input())
     if user_input is 1:
         print("Вы выбрали Атаковать монстра")
+        
         for subitem in values:
             if not isinstance(subitem, dict):
                 exp, tm = atack_monster(subitem)
