@@ -105,6 +105,16 @@ current_exp = 0
 current_location = ''
 current_date = datetime.datetime.now()
 
+# TODO Через функции это конечно можно всё реализовать, но местами это выходит неудобно и сложно.
+# TODO Давайте попробуем сгруппировать это всё по классам:
+# TODO Создайте три класса - Карта, Герой, Игра
+# TODO К карте отнесите методы - загрузка карты, смена локации и анализ локации
+# TODO К герою методы получения опыта и учет затраченного времени (можно сделать что-то вроде is_alive() метода
+# TODO который вернет True, если герой ещё жив (осталось времени больше 0))
+# TODO Игра же будет инициализировать объекты других классов и запускать их методы
+# TODO + собирать указания пользователя и вызывать выбранные им методы
+# TODO ВАЖНО! Каждый ввод пользователя проверять!
+# TODO + нужен метод записи в csv. Это по своему усмотрению уже добавьте в любой из классов
 
 def parse_location(item):
     pattern = r'Location_(B\d+|\d+)_tm(\d*\.\d+|\d+)'
@@ -158,13 +168,16 @@ def csv_logger():
 
 
 def work_with_location(location):
+    # TODO Глобальные переменные соответственно преобразуются в атрибуты класса
+    # TODO Что позволит нам помимо прочего облегчить пространство имён, если вдруг мы захотим импортировать
+    # TODO куда-то нашу игру.
     global current_exp, remaining_time, current_location
     current_location = list(dict.keys(location))[0]
     values = list(dict.values(location))[0]
     csv_logger()
     print(f'Вы находитесь в локации {current_location}')
     print(f'У вас {current_exp} опыта и осталось {remaining_time} секунд до наводнения')
-    if Decimal(remaining_time) < 0:
+    if Decimal(remaining_time) < 0:  # TODO Если время равно 0, то тоже должен быть проигрыш
         print("Время вышло. Герой утонул и почил смертью храбрых")
         print("")
         return 1
@@ -184,7 +197,10 @@ def work_with_location(location):
     print('2.Перейти в другую локацию')
     print('3.Сдаться и выйти из игры')
     user_input = int(input())
-    if user_input is 1:
+    if user_input is 1:  # TODO С таким сравнением надо быть осторожнее
+        # TODO is проверяет идентичность объектов, а не равенство значений
+        # TODO Но в некоторый момент два числа могут иметь равное значение, но при этом они могут не быть
+        # TODO идентичными объектами (используйте == лучше :) )
         print("Вы выбрали Атаковать монстра")
         
         for subitem in values:
@@ -213,6 +229,8 @@ def work_with_location(location):
                             time_hatch = hatch_keeper(loc)
                             getcontext().prec = 20
                             remaining_time = str(Decimal(remaining_time) - Decimal(time_hatch))
+                            # TODO Вот тут ещё стоит проверить, осталось ли время после этого действия
+                            # TODO Если время == 0 - то это проигрыш
                             print(f'Осталось времени до наводнеия {remaining_time}')
                             print(list(dict.values(subitem))[0])
                             return 2
@@ -221,6 +239,7 @@ def work_with_location(location):
                             return 1
 
         user_input_location = input('Введите номер локации:')
+        # TODO Любой ввод пользователя стоит снабдить проверками, иначе программа будет неустойчивой
         pattern = r'Location_' + f'{user_input_location}' + r'_tm\d'
         match = None
         for subitem in values:
